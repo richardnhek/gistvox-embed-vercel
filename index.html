@@ -481,6 +481,7 @@ const autoplay = params.get('autoplay') === 'true';
 let audio = null;
 let isDragging = false;
 let isPlaying = false;
+let hasTrackedListen = false;
 
 // Apply theme
 if (theme === 'dark') document.body.classList.add('dark');
@@ -676,6 +677,9 @@ function setupAudioPlayer() {
     player.classList.add('playing');
     audioBars.style.display = 'flex';
     progressFill.classList.add('playing');
+    
+    // Track the listen when play starts
+    trackListen();
   });
 
   audio.addEventListener('pause', () => {
@@ -766,6 +770,77 @@ function setupAudioPlayer() {
       window.parent.postMessage({ type: 'gistvox-embed-play', postId }, '*');
     }
   });
+}
+
+// Track listen function
+async function trackListen() {
+  // Only track once per session to avoid spam
+  if (hasTrackedListen) {
+    console.log('Listen already tracked for this session');
+    return;
+  }
+  
+  // Check session storage to prevent multiple counts on page refresh
+  const sessionKey = `gistvox_listened_${postId}`;
+  if (sessionStorage.getItem(sessionKey)) {
+    console.log('Listen already tracked in this browser session');
+    hasTrackedListen = true;
+    return;
+  }
+  
+  try {
+    console.log('Tracking listen for post:', postId);
+    
+    // Call the RPC function to increment listen count
+    const response = await fetch(`${SUPABASE_URL}/rest/v1/rpc/increment_listen_count_anon`, {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=representation'
+      },
+      body: JSON.stringify({ p_post_id: postId })
+    });
+    
+    if (!response.ok) {
+      console.warn('Failed to track listen:', response.status);
+      // Try the simpler version as fallback
+      const fallbackResponse = await fetch(`${SUPABASE_URL}/rest/v1/rpc/increment_listen_count_simple`, {
+        method: 'POST',
+        headers: {
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ p_post_id: postId })
+      });
+      
+      if (fallbackResponse.ok) {
+        console.log('Listen tracked via fallback method');
+      }
+    } else {
+      const result = await response.json();
+      console.log('Listen tracked successfully. New count:', result.count || result);
+      
+      // Update the displayed count if we have it
+      const statsText = document.querySelector('.stats-text');
+      if (statsText && result.count) {
+        // Parse and update the listens count in the stats
+        const currentText = statsText.textContent;
+        const newText = currentText.replace(/(\d+(?:,\d+)*) listens/, `${formatWithCommas(result.count)} listens`);
+        statsText.textContent = newText;
+      }
+    }
+    
+    // Mark as tracked for this session
+    hasTrackedListen = true;
+    sessionStorage.setItem(sessionKey, 'true');
+    
+  } catch (error) {
+    console.error('Error tracking listen:', error);
+    // Don't throw - we don't want to break playback if tracking fails
+  }
 }
 
 // Actions

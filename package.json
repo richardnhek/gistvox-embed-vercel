@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/YOUR_USERNAME/gistvox-embed-vercel.git"
+    "url": "git+https://github.com/richardnhek/gistvox-embed-vercel.git"
   },
   "keywords": [
     "gistvox",
@@ -22,7 +22,7 @@
   "author": "Gistvox Team",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/YOUR_USERNAME/gistvox-embed-vercel/issues"
+    "url": "https://github.com/richardnhek/gistvox-embed-vercel/issues"
   },
   "homepage": "https://embed.gistvox.com"
 }
