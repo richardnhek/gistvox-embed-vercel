@@ -1,0 +1,28 @@
+{
+  "name": "gistvox-embed",
+  "version": "1.0.0",
+  "description": "Embeddable audio player widget for Gistvox",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx serve",
+    "deploy": "vercel --prod",
+    "test": "echo \"Test embed at: https://embed.gistvox.com/?id=00c3c293-5973-4307-9938-84669a277447\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YOUR_USERNAME/gistvox-embed-vercel.git"
+  },
+  "keywords": [
+    "gistvox",
+    "embed",
+    "audio",
+    "player",
+    "widget"
+  ],
+  "author": "Gistvox Team",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/YOUR_USERNAME/gistvox-embed-vercel/issues"
+  },
+  "homepage": "https://embed.gistvox.com"
+}
