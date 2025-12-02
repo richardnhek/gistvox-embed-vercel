@@ -1,0 +1,6393 @@
+[
+    {
+      "table_schema": "public",
+      "table_name": "account_deletion_feedback",
+      "table_type": "table",
+      "table_comment": null,
+      "columns": [
+        {
+          "no": 1,
+          "name": "id",
+          "type": "uuid",
+          "comment": null,
+          "default": "gen_random_uuid()",
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": true,
+          "identity_generation": null
+        },
+        {
+          "no": 2,
+          "name": "user_id",
+          "type": "uuid",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 3,
+          "name": "user_email",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 4,
+          "name": "user_handle",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 5,
+          "name": "reason",
+          "type": "deletion_reason",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 6,
+          "name": "additional_feedback",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 7,
+          "name": "deleted_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": "now()",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 8,
+          "name": "metadata",
+          "type": "jsonb",
+          "comment": null,
+          "default": "'{}'::jsonb",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        }
+      ],
+      "indexes": [
+        {
+          "def": "CREATE UNIQUE INDEX account_deletion_feedback_pkey ON public.account_deletion_feedback USING btree (id)",
+          "name": "account_deletion_feedback_pkey"
+        },
+        {
+          "def": "CREATE INDEX idx_deletion_feedback_deleted_at ON public.account_deletion_feedback USING btree (deleted_at)",
+          "name": "idx_deletion_feedback_deleted_at"
+        },
+        {
+          "def": "CREATE INDEX idx_deletion_feedback_reason ON public.account_deletion_feedback USING btree (reason)",
+          "name": "idx_deletion_feedback_reason"
+        }
+      ]
+    },
+    {
+      "table_schema": "public",
+      "table_name": "admin_audit_logs",
+      "table_type": "table",
+      "table_comment": null,
+      "columns": [
+        {
+          "no": 1,
+          "name": "id",
+          "type": "uuid",
+          "comment": null,
+          "default": "gen_random_uuid()",
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": true,
+          "identity_generation": null
+        },
+        {
+          "no": 2,
+          "name": "admin_user_id",
+          "type": "uuid",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [
+            {
+              "on_delete": "NO ACTION",
+              "on_update": "NO ACTION",
+              "ref_table": "users",
+              "constraint": "admin_audit_logs_admin_user_id_fkey",
+              "ref_column": "id",
+              "ref_schema": "public"
+            }
+          ],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 3,
+          "name": "action",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 4,
+          "name": "target_table",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 5,
+          "name": "target_id",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 6,
+          "name": "before_data",
+          "type": "jsonb",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 7,
+          "name": "after_data",
+          "type": "jsonb",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 8,
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": "now()",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        }
+      ],
+      "indexes": [
+        {
+          "def": "CREATE UNIQUE INDEX admin_audit_logs_pkey ON public.admin_audit_logs USING btree (id)",
+          "name": "admin_audit_logs_pkey"
+        },
+        {
+          "def": "CREATE INDEX idx_audit_logs_admin_id ON public.admin_audit_logs USING btree (admin_user_id)",
+          "name": "idx_audit_logs_admin_id"
+        },
+        {
+          "def": "CREATE INDEX idx_audit_logs_created_at ON public.admin_audit_logs USING btree (created_at DESC)",
+          "name": "idx_audit_logs_created_at"
+        }
+      ]
+    },
+    {
+      "table_schema": "public",
+      "table_name": "admin_login_challenges",
+      "table_type": "table",
+      "table_comment": null,
+      "columns": [
+        {
+          "no": 1,
+          "name": "id",
+          "type": "uuid",
+          "comment": null,
+          "default": "gen_random_uuid()",
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": true,
+          "identity_generation": null
+        },
+        {
+          "no": 2,
+          "name": "user_id",
+          "type": "uuid",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [
+            {
+              "on_delete": "NO ACTION",
+              "on_update": "NO ACTION",
+              "ref_table": "users",
+              "constraint": "admin_login_challenges_user_id_fkey",
+              "ref_column": "id",
+              "ref_schema": "public"
+            }
+          ],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 3,
+          "name": "code",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 4,
+          "name": "expires_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 5,
+          "name": "consumed_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 6,
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": "now()",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        }
+      ],
+      "indexes": [
+        {
+          "def": "CREATE UNIQUE INDEX admin_login_challenges_pkey ON public.admin_login_challenges USING btree (id)",
+          "name": "admin_login_challenges_pkey"
+        },
+        {
+          "def": "CREATE INDEX idx_admin_challenges_user_id ON public.admin_login_challenges USING btree (user_id)",
+          "name": "idx_admin_challenges_user_id"
+        }
+      ]
+    },
+    {
+      "table_schema": "public",
+      "table_name": "app_feature_logs",
+      "table_type": "table",
+      "table_comment": null,
+      "columns": [
+        {
+          "no": 1,
+          "name": "id",
+          "type": "uuid",
+          "comment": null,
+          "default": "uuid_generate_v4()",
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": true,
+          "identity_generation": null
+        },
+        {
+          "no": 2,
+          "name": "feature_key",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 3,
+          "name": "action",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 4,
+          "name": "reason",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 5,
+          "name": "metadata",
+          "type": "jsonb",
+          "comment": null,
+          "default": "'{}'::jsonb",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 6,
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": "now()",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 7,
+          "name": "created_by",
+          "type": "uuid",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [
+            {
+              "on_delete": "SET NULL",
+              "on_update": "NO ACTION",
+              "ref_table": "users",
+              "constraint": "app_feature_logs_created_by_fkey",
+              "ref_column": "id",
+              "ref_schema": "auth"
+            }
+          ],
+          "is_primary_key": false,
+          "identity_generation": null
+        }
+      ],
+      "indexes": [
+        {
+          "def": "CREATE UNIQUE INDEX app_feature_logs_pkey ON public.app_feature_logs USING btree (id)",
+          "name": "app_feature_logs_pkey"
+        },
+        {
+          "def": "CREATE INDEX idx_app_feature_logs_created_at ON public.app_feature_logs USING btree (created_at DESC)",
+          "name": "idx_app_feature_logs_created_at"
+        },
+        {
+          "def": "CREATE INDEX idx_app_feature_logs_feature_key ON public.app_feature_logs USING btree (feature_key)",
+          "name": "idx_app_feature_logs_feature_key"
+        }
+      ]
+    },
+    {
+      "table_schema": "public",
+      "table_name": "app_features",
+      "table_type": "table",
+      "table_comment": "Feature flags for enabling/disabling app features with custom messages",
+      "columns": [
+        {
+          "no": 1,
+          "name": "id",
+          "type": "uuid",
+          "comment": null,
+          "default": "uuid_generate_v4()",
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": true,
+          "identity_generation": null
+        },
+        {
+          "no": 2,
+          "name": "feature_key",
+          "type": "text",
+          "comment": "Unique identifier used in code to check feature status",
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 3,
+          "name": "feature_name",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 4,
+          "name": "is_enabled",
+          "type": "boolean",
+          "comment": "Whether the feature is currently accessible to users",
+          "default": "true",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 5,
+          "name": "popup_title",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 6,
+          "name": "popup_message",
+          "type": "text",
+          "comment": "Message shown to users when they try to access a disabled feature",
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 7,
+          "name": "button_text",
+          "type": "text",
+          "comment": null,
+          "default": "'OK'::text",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 8,
+          "name": "redirect_url",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 9,
+          "name": "description",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 10,
+          "name": "maintenance_start_at",
+          "type": "timestamp with time zone",
+          "comment": "Scheduled start time for feature maintenance (optional)",
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 11,
+          "name": "maintenance_end_at",
+          "type": "timestamp with time zone",
+          "comment": "Scheduled end time for feature maintenance (optional)",
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 12,
+          "name": "priority",
+          "type": "integer",
+          "comment": null,
+          "default": "0",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 13,
+          "name": "metadata",
+          "type": "jsonb",
+          "comment": null,
+          "default": "'{}'::jsonb",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 14,
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": "now()",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 15,
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": "now()",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        }
+      ],
+      "indexes": [
+        {
+          "def": "CREATE UNIQUE INDEX app_features_feature_key_key ON public.app_features USING btree (feature_key)",
+          "name": "app_features_feature_key_key"
+        },
+        {
+          "def": "CREATE UNIQUE INDEX app_features_pkey ON public.app_features USING btree (id)",
+          "name": "app_features_pkey"
+        },
+        {
+          "def": "CREATE INDEX idx_app_features_enabled ON public.app_features USING btree (is_enabled)",
+          "name": "idx_app_features_enabled"
+        },
+        {
+          "def": "CREATE INDEX idx_app_features_key ON public.app_features USING btree (feature_key)",
+          "name": "idx_app_features_key"
+        }
+      ]
+    },
+    {
+      "table_schema": "public",
+      "table_name": "archive_folders",
+      "table_type": "table",
+      "table_comment": null,
+      "columns": [
+        {
+          "no": 1,
+          "name": "id",
+          "type": "uuid",
+          "comment": null,
+          "default": "uuid_generate_v4()",
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": true,
+          "identity_generation": null
+        },
+        {
+          "no": 2,
+          "name": "user_id",
+          "type": "uuid",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [
+            {
+              "on_delete": "CASCADE",
+              "on_update": "NO ACTION",
+              "ref_table": "users",
+              "constraint": "archive_folders_user_id_fkey",
+              "ref_column": "id",
+              "ref_schema": "public"
+            }
+          ],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 3,
+          "name": "name",
+          "type": "character varying(100)",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 4,
+          "name": "description",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 5,
+          "name": "icon",
+          "type": "character varying(10)",
+          "comment": null,
+          "default": "'📁'::character varying",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 6,
+          "name": "color",
+          "type": "character varying(7)",
+          "comment": null,
+          "default": "'#808080'::character varying",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 7,
+          "name": "posts_count",
+          "type": "integer",
+          "comment": null,
+          "default": "0",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 8,
+          "name": "is_default",
+          "type": "boolean",
+          "comment": null,
+          "default": "false",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 9,
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": "now()",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 10,
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": "now()",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        }
+      ],
+      "indexes": [
+        {
+          "def": "CREATE UNIQUE INDEX archive_folders_pkey ON public.archive_folders USING btree (id)",
+          "name": "archive_folders_pkey"
+        },
+        {
+          "def": "CREATE UNIQUE INDEX archive_folders_user_id_name_key ON public.archive_folders USING btree (user_id, name)",
+          "name": "archive_folders_user_id_name_key"
+        },
+        {
+          "def": "CREATE INDEX idx_archive_folders_created_at ON public.archive_folders USING btree (created_at DESC)",
+          "name": "idx_archive_folders_created_at"
+        },
+        {
+          "def": "CREATE INDEX idx_archive_folders_user ON public.archive_folders USING btree (user_id)",
+          "name": "idx_archive_folders_user"
+        }
+      ]
+    },
+    {
+      "table_schema": "public",
+      "table_name": "challenge_participants",
+      "table_type": "table",
+      "table_comment": null,
+      "columns": [
+        {
+          "no": 1,
+          "name": "id",
+          "type": "uuid",
+          "comment": null,
+          "default": "uuid_generate_v4()",
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": true,
+          "identity_generation": null
+        },
+        {
+          "no": 2,
+          "name": "challenge_id",
+          "type": "uuid",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [
+            {
+              "on_delete": "CASCADE",
+              "on_update": "NO ACTION",
+              "ref_table": "challenges",
+              "constraint": "challenge_participants_challenge_id_fkey",
+              "ref_column": "id",
+              "ref_schema": "public"
+            }
+          ],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 3,
+          "name": "user_id",
+          "type": "uuid",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [
+            {
+              "on_delete": "CASCADE",
+              "on_update": "NO ACTION",
+              "ref_table": "users",
+              "constraint": "challenge_participants_user_id_fkey",
+              "ref_column": "id",
+              "ref_schema": "public"
+            }
+          ],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 4,
+          "name": "post_id",
+          "type": "uuid",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [
+            {
+              "on_delete": "SET NULL",
+              "on_update": "NO ACTION",
+              "ref_table": "posts",
+              "constraint": "challenge_participants_post_id_fkey",
+              "ref_column": "id",
+              "ref_schema": "public"
+            }
+          ],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 5,
+          "name": "joined_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": "now()",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 6,
+          "name": "submitted_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 7,
+          "name": "submission_url",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        }
+      ],
+      "indexes": [
+        {
+          "def": "CREATE UNIQUE INDEX challenge_participants_challenge_id_user_id_key ON public.challenge_participants USING btree (challenge_id, user_id)",
+          "name": "challenge_participants_challenge_id_user_id_key"
+        },
+        {
+          "def": "CREATE UNIQUE INDEX challenge_participants_pkey ON public.challenge_participants USING btree (id)",
+          "name": "challenge_participants_pkey"
+        },
+        {
+          "def": "CREATE INDEX idx_challenge_participants_challenge ON public.challenge_participants USING btree (challenge_id)",
+          "name": "idx_challenge_participants_challenge"
+        },
+        {
+          "def": "CREATE INDEX idx_challenge_participants_user ON public.challenge_participants USING btree (user_id)",
+          "name": "idx_challenge_participants_user"
+        }
+      ]
+    },
+    {
+      "table_schema": "public",
+      "table_name": "challenges",
+      "table_type": "table",
+      "table_comment": null,
+      "columns": [
+        {
+          "no": 1,
+          "name": "id",
+          "type": "uuid",
+          "comment": null,
+          "default": "uuid_generate_v4()",
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": true,
+          "identity_generation": null
+        },
+        {
+          "no": 2,
+          "name": "title",
+          "type": "character varying(200)",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 3,
+          "name": "description",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 4,
+          "name": "theme",
+          "type": "character varying(100)",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 5,
+          "name": "hashtag",
+          "type": "character varying(50)",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 6,
+          "name": "difficulty",
+          "type": "character varying(20)",
+          "comment": null,
+          "default": "'medium'::character varying",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 7,
+          "name": "prize_description",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 8,
+          "name": "rules",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 9,
+          "name": "start_date",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 10,
+          "name": "end_date",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 11,
+          "name": "participants_count",
+          "type": "integer",
+          "comment": null,
+          "default": "0",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 12,
+          "name": "is_active",
+          "type": "boolean",
+          "comment": null,
+          "default": "true",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 13,
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": "now()",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 14,
+          "name": "participant_count",
+          "type": "integer",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 15,
+          "name": "navigation_target",
+          "type": "character varying(50)",
+          "comment": "Target screen/page for navigation when challenge is clicked. Valid values: recording, discover, feed, profile, groups, etc.",
+          "default": "NULL::character varying",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 16,
+          "name": "is_featured",
+          "type": "boolean",
+          "comment": "Marks challenge as featured on admin dashboard and app",
+          "default": "false",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        }
+      ],
+      "indexes": [
+        {
+          "def": "CREATE UNIQUE INDEX challenges_hashtag_key ON public.challenges USING btree (hashtag)",
+          "name": "challenges_hashtag_key"
+        },
+        {
+          "def": "CREATE UNIQUE INDEX challenges_pkey ON public.challenges USING btree (id)",
+          "name": "challenges_pkey"
+        },
+        {
+          "def": "CREATE INDEX idx_challenges_active ON public.challenges USING btree (is_active)",
+          "name": "idx_challenges_active"
+        },
+        {
+          "def": "CREATE INDEX idx_challenges_dates ON public.challenges USING btree (start_date, end_date)",
+          "name": "idx_challenges_dates"
+        },
+        {
+          "def": "CREATE INDEX idx_challenges_featured ON public.challenges USING btree (is_featured, is_active, start_date DESC) WHERE ((is_featured = true) AND (is_active = true))",
+          "name": "idx_challenges_featured"
+        },
+        {
+          "def": "CREATE INDEX idx_challenges_hashtag ON public.challenges USING btree (hashtag)",
+          "name": "idx_challenges_hashtag"
+        },
+        {
+          "def": "CREATE INDEX idx_challenges_navigation_target ON public.challenges USING btree (navigation_target)",
+          "name": "idx_challenges_navigation_target"
+        }
+      ]
+    },
+    {
+      "table_schema": "public",
+      "table_name": "comments_backup",
+      "table_type": "table",
+      "table_comment": null,
+      "columns": [
+        {
+          "no": 1,
+          "name": "id",
+          "type": "uuid",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 2,
+          "name": "post_id",
+          "type": "uuid",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 3,
+          "name": "user_id",
+          "type": "uuid",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 4,
+          "name": "parent_comment_id",
+          "type": "uuid",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 5,
+          "name": "content",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 6,
+          "name": "audio_comment_url",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 7,
+          "name": "audio_duration",
+          "type": "integer",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 8,
+          "name": "likes_count",
+          "type": "integer",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 9,
+          "name": "is_edited",
+          "type": "boolean",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 10,
+          "name": "is_deleted",
+          "type": "boolean",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 11,
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 12,
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        }
+      ],
+      "indexes": [
+        {
+          "def": null,
+          "name": null
+        }
+      ]
+    },
+    {
+      "table_schema": "public",
+      "table_name": "content_reports",
+      "table_type": "table",
+      "table_comment": null,
+      "columns": [
+        {
+          "no": 1,
+          "name": "id",
+          "type": "uuid",
+          "comment": null,
+          "default": "uuid_generate_v4()",
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": true,
+          "identity_generation": null
+        },
+        {
+          "no": 2,
+          "name": "reporter_user_id",
+          "type": "uuid",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [
+            {
+              "on_delete": "CASCADE",
+              "on_update": "NO ACTION",
+              "ref_table": "users",
+              "constraint": "content_reports_reporter_user_id_fkey",
+              "ref_column": "id",
+              "ref_schema": "public"
+            }
+          ],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 3,
+          "name": "content_type",
+          "type": "character varying(20)",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 4,
+          "name": "content_id",
+          "type": "uuid",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 5,
+          "name": "reason",
+          "type": "character varying(50)",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 6,
+          "name": "description",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 7,
+          "name": "status",
+          "type": "character varying(20)",
+          "comment": null,
+          "default": "'pending'::character varying",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 8,
+          "name": "moderator_id",
+          "type": "uuid",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [
+            {
+              "on_delete": "SET NULL",
+              "on_update": "NO ACTION",
+              "ref_table": "users",
+              "constraint": "content_reports_moderator_id_fkey",
+              "ref_column": "id",
+              "ref_schema": "public"
+            }
+          ],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 9,
+          "name": "moderator_notes",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 10,
+          "name": "action_taken",
+          "type": "character varying(50)",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 11,
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": "now()",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 12,
+          "name": "resolved_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        }
+      ],
+      "indexes": [
+        {
+          "def": "CREATE UNIQUE INDEX content_reports_pkey ON public.content_reports USING btree (id)",
+          "name": "content_reports_pkey"
+        },
+        {
+          "def": "CREATE INDEX idx_content_reports_content ON public.content_reports USING btree (content_type, content_id)",
+          "name": "idx_content_reports_content"
+        },
+        {
+          "def": "CREATE INDEX idx_content_reports_created_at ON public.content_reports USING btree (created_at DESC)",
+          "name": "idx_content_reports_created_at"
+        },
+        {
+          "def": "CREATE INDEX idx_content_reports_status ON public.content_reports USING btree (status)",
+          "name": "idx_content_reports_status"
+        }
+      ]
+    },
+    {
+      "table_schema": "public",
+      "table_name": "direct_responses",
+      "table_type": "table",
+      "table_comment": null,
+      "columns": [
+        {
+          "no": 1,
+          "name": "id",
+          "type": "uuid",
+          "comment": null,
+          "default": "gen_random_uuid()",
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": true,
+          "identity_generation": null
+        },
+        {
+          "no": 2,
+          "name": "post_id",
+          "type": "uuid",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [
+            {
+              "on_delete": "CASCADE",
+              "on_update": "NO ACTION",
+              "ref_table": "posts",
+              "constraint": "direct_responses_post_id_fkey",
+              "ref_column": "id",
+              "ref_schema": "public"
+            }
+          ],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 3,
+          "name": "sender_id",
+          "type": "uuid",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [
+            {
+              "on_delete": "CASCADE",
+              "on_update": "NO ACTION",
+              "ref_table": "users",
+              "constraint": "direct_responses_sender_id_fkey",
+              "ref_column": "id",
+              "ref_schema": "public"
+            }
+          ],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 4,
+          "name": "receiver_id",
+          "type": "uuid",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [
+            {
+              "on_delete": "CASCADE",
+              "on_update": "NO ACTION",
+              "ref_table": "users",
+              "constraint": "direct_responses_receiver_id_fkey",
+              "ref_column": "id",
+              "ref_schema": "public"
+            }
+          ],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 5,
+          "name": "audio_url",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 6,
+          "name": "audio_duration",
+          "type": "integer",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 7,
+          "name": "transcription",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 8,
+          "name": "is_read",
+          "type": "boolean",
+          "comment": null,
+          "default": "false",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 9,
+          "name": "read_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 10,
+          "name": "is_deleted",
+          "type": "boolean",
+          "comment": null,
+          "default": "false",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 11,
+          "name": "deleted_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 12,
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": "now()",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 13,
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": "now()",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        }
+      ],
+      "indexes": [
+        {
+          "def": "CREATE UNIQUE INDEX direct_responses_pkey ON public.direct_responses USING btree (id)",
+          "name": "direct_responses_pkey"
+        },
+        {
+          "def": "CREATE INDEX idx_direct_responses_receiver_post ON public.direct_responses USING btree (receiver_id, post_id, created_at DESC) WHERE (is_deleted = false)",
+          "name": "idx_direct_responses_receiver_post"
+        },
+        {
+          "def": "CREATE INDEX idx_direct_responses_sender ON public.direct_responses USING btree (sender_id, created_at DESC) WHERE (is_deleted = false)",
+          "name": "idx_direct_responses_sender"
+        },
+        {
+          "def": "CREATE INDEX idx_direct_responses_unread ON public.direct_responses USING btree (receiver_id, is_read) WHERE ((is_deleted = false) AND (is_read = false))",
+          "name": "idx_direct_responses_unread"
+        }
+      ]
+    },
+    {
+      "table_schema": "public",
+      "table_name": "domain_blacklist",
+      "table_type": "table",
+      "table_comment": null,
+      "columns": [
+        {
+          "no": 1,
+          "name": "id",
+          "type": "uuid",
+          "comment": null,
+          "default": "gen_random_uuid()",
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": true,
+          "identity_generation": null
+        },
+        {
+          "no": 2,
+          "name": "domain",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 3,
+          "name": "category",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 4,
+          "name": "severity",
+          "type": "text",
+          "comment": null,
+          "default": "'high'::text",
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 5,
+          "name": "reason",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 6,
+          "name": "added_by",
+          "type": "text",
+          "comment": null,
+          "default": "'system'::text",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 7,
+          "name": "is_active",
+          "type": "boolean",
+          "comment": null,
+          "default": "true",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 8,
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": "timezone('utc'::text, now())",
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 9,
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": "timezone('utc'::text, now())",
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        }
+      ],
+      "indexes": [
+        {
+          "def": "CREATE UNIQUE INDEX domain_blacklist_domain_key ON public.domain_blacklist USING btree (domain)",
+          "name": "domain_blacklist_domain_key"
+        },
+        {
+          "def": "CREATE UNIQUE INDEX domain_blacklist_pkey ON public.domain_blacklist USING btree (id)",
+          "name": "domain_blacklist_pkey"
+        },
+        {
+          "def": "CREATE INDEX idx_domain_blacklist_category ON public.domain_blacklist USING btree (category) WHERE (is_active = true)",
+          "name": "idx_domain_blacklist_category"
+        },
+        {
+          "def": "CREATE INDEX idx_domain_blacklist_domain ON public.domain_blacklist USING btree (domain) WHERE (is_active = true)",
+          "name": "idx_domain_blacklist_domain"
+        },
+        {
+          "def": "CREATE INDEX idx_domain_blacklist_pattern ON public.domain_blacklist USING gin (domain gin_trgm_ops) WHERE (is_active = true)",
+          "name": "idx_domain_blacklist_pattern"
+        }
+      ]
+    },
+    {
+      "table_schema": "public",
+      "table_name": "featured_stories",
+      "table_type": "table",
+      "table_comment": null,
+      "columns": [
+        {
+          "no": 1,
+          "name": "id",
+          "type": "uuid",
+          "comment": null,
+          "default": "uuid_generate_v4()",
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": true,
+          "identity_generation": null
+        },
+        {
+          "no": 2,
+          "name": "post_id",
+          "type": "uuid",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [
+            {
+              "on_delete": "CASCADE",
+              "on_update": "NO ACTION",
+              "ref_table": "posts",
+              "constraint": "featured_stories_post_id_fkey",
+              "ref_column": "id",
+              "ref_schema": "public"
+            }
+          ],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 3,
+          "name": "category",
+          "type": "character varying(50)",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 4,
+          "name": "featured_date",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": "now()",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 5,
+          "name": "featured_until",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 6,
+          "name": "priority",
+          "type": "integer",
+          "comment": null,
+          "default": "0",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 7,
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": "now()",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        }
+      ],
+      "indexes": [
+        {
+          "def": "CREATE UNIQUE INDEX featured_stories_pkey ON public.featured_stories USING btree (id)",
+          "name": "featured_stories_pkey"
+        },
+        {
+          "def": "CREATE INDEX idx_featured_stories_category ON public.featured_stories USING btree (category)",
+          "name": "idx_featured_stories_category"
+        },
+        {
+          "def": "CREATE INDEX idx_featured_stories_date ON public.featured_stories USING btree (featured_date DESC)",
+          "name": "idx_featured_stories_date"
+        },
+        {
+          "def": "CREATE INDEX idx_featured_stories_post ON public.featured_stories USING btree (post_id)",
+          "name": "idx_featured_stories_post"
+        }
+      ]
+    },
+    {
+      "table_schema": "public",
+      "table_name": "follows",
+      "table_type": "table",
+      "table_comment": null,
+      "columns": [
+        {
+          "no": 1,
+          "name": "id",
+          "type": "uuid",
+          "comment": null,
+          "default": "uuid_generate_v4()",
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": true,
+          "identity_generation": null
+        },
+        {
+          "no": 2,
+          "name": "follower_id",
+          "type": "uuid",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [
+            {
+              "on_delete": "CASCADE",
+              "on_update": "NO ACTION",
+              "ref_table": "users",
+              "constraint": "follows_follower_id_fkey",
+              "ref_column": "id",
+              "ref_schema": "public"
+            }
+          ],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 3,
+          "name": "following_id",
+          "type": "uuid",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [
+            {
+              "on_delete": "CASCADE",
+              "on_update": "NO ACTION",
+              "ref_table": "users",
+              "constraint": "follows_following_id_fkey",
+              "ref_column": "id",
+              "ref_schema": "public"
+            }
+          ],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 4,
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": "now()",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        }
+      ],
+      "indexes": [
+        {
+          "def": "CREATE UNIQUE INDEX follows_follower_id_following_id_key ON public.follows USING btree (follower_id, following_id)",
+          "name": "follows_follower_id_following_id_key"
+        },
+        {
+          "def": "CREATE UNIQUE INDEX follows_pkey ON public.follows USING btree (id)",
+          "name": "follows_pkey"
+        },
+        {
+          "def": "CREATE INDEX idx_follows_created_at ON public.follows USING btree (created_at DESC)",
+          "name": "idx_follows_created_at"
+        },
+        {
+          "def": "CREATE INDEX idx_follows_follower ON public.follows USING btree (follower_id)",
+          "name": "idx_follows_follower"
+        },
+        {
+          "def": "CREATE INDEX idx_follows_follower_following ON public.follows USING btree (follower_id, following_id)",
+          "name": "idx_follows_follower_following"
+        },
+        {
+          "def": "CREATE INDEX idx_follows_following ON public.follows USING btree (following_id)",
+          "name": "idx_follows_following"
+        },
+        {
+          "def": "CREATE INDEX idx_follows_following_id ON public.follows USING btree (following_id)",
+          "name": "idx_follows_following_id"
+        }
+      ]
+    },
+    {
+      "table_schema": "public",
+      "table_name": "group_invitations",
+      "table_type": "table",
+      "table_comment": null,
+      "columns": [
+        {
+          "no": 1,
+          "name": "id",
+          "type": "uuid",
+          "comment": null,
+          "default": "uuid_generate_v4()",
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": true,
+          "identity_generation": null
+        },
+        {
+          "no": 2,
+          "name": "group_id",
+          "type": "uuid",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [
+            {
+              "on_delete": "CASCADE",
+              "on_update": "NO ACTION",
+              "ref_table": "groups",
+              "constraint": "group_invitations_group_id_fkey",
+              "ref_column": "id",
+              "ref_schema": "public"
+            }
+          ],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 3,
+          "name": "inviter_id",
+          "type": "uuid",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [
+            {
+              "on_delete": "CASCADE",
+              "on_update": "NO ACTION",
+              "ref_table": "users",
+              "constraint": "group_invitations_inviter_id_fkey",
+              "ref_column": "id",
+              "ref_schema": "public"
+            }
+          ],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 4,
+          "name": "invitee_id",
+          "type": "uuid",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [
+            {
+              "on_delete": "CASCADE",
+              "on_update": "NO ACTION",
+              "ref_table": "users",
+              "constraint": "group_invitations_invitee_id_fkey",
+              "ref_column": "id",
+              "ref_schema": "public"
+            }
+          ],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 5,
+          "name": "status",
+          "type": "character varying(20)",
+          "comment": null,
+          "default": "'pending'::character varying",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 6,
+          "name": "invitation_message",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 7,
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": "now()",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 8,
+          "name": "responded_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 9,
+          "name": "expires_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": "(now() + '7 days'::interval)",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        }
+      ],
+      "indexes": [
+        {
+          "def": "CREATE UNIQUE INDEX group_invitations_group_id_invitee_id_status_key ON public.group_invitations USING btree (group_id, invitee_id, status)",
+          "name": "group_invitations_group_id_invitee_id_status_key"
+        },
+        {
+          "def": "CREATE UNIQUE INDEX group_invitations_pkey ON public.group_invitations USING btree (id)",
+          "name": "group_invitations_pkey"
+        },
+        {
+          "def": "CREATE INDEX idx_group_invitations_group ON public.group_invitations USING btree (group_id)",
+          "name": "idx_group_invitations_group"
+        },
+        {
+          "def": "CREATE INDEX idx_group_invitations_invitee ON public.group_invitations USING btree (invitee_id, status)",
+          "name": "idx_group_invitations_invitee"
+        },
+        {
+          "def": "CREATE INDEX idx_group_invitations_status ON public.group_invitations USING btree (status)",
+          "name": "idx_group_invitations_status"
+        }
+      ]
+    },
+    {
+      "table_schema": "public",
+      "table_name": "group_members",
+      "table_type": "table",
+      "table_comment": null,
+      "columns": [
+        {
+          "no": 1,
+          "name": "id",
+          "type": "uuid",
+          "comment": null,
+          "default": "uuid_generate_v4()",
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": true,
+          "identity_generation": null
+        },
+        {
+          "no": 2,
+          "name": "group_id",
+          "type": "uuid",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [
+            {
+              "on_delete": "CASCADE",
+              "on_update": "NO ACTION",
+              "ref_table": "groups",
+              "constraint": "group_members_group_id_fkey",
+              "ref_column": "id",
+              "ref_schema": "public"
+            }
+          ],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 3,
+          "name": "user_id",
+          "type": "uuid",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [
+            {
+              "on_delete": "CASCADE",
+              "on_update": "NO ACTION",
+              "ref_table": "users",
+              "constraint": "group_members_user_id_fkey",
+              "ref_column": "id",
+              "ref_schema": "public"
+            }
+          ],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 4,
+          "name": "role",
+          "type": "character varying(20)",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 5,
+          "name": "status",
+          "type": "character varying(20)",
+          "comment": null,
+          "default": "'active'::character varying",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 6,
+          "name": "permissions",
+          "type": "jsonb",
+          "comment": null,
+          "default": "'{\"can_post\": false, \"can_invite\": false, \"can_moderate\": false}'::jsonb",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 7,
+          "name": "invited_by_id",
+          "type": "uuid",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [
+            {
+              "on_delete": "SET NULL",
+              "on_update": "NO ACTION",
+              "ref_table": "users",
+              "constraint": "group_members_invited_by_id_fkey",
+              "ref_column": "id",
+              "ref_schema": "public"
+            }
+          ],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 8,
+          "name": "joined_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": "now()",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 9,
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": "now()",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 10,
+          "name": "invitation_message",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 11,
+          "name": "invited_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": "now()",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 12,
+          "name": "accepted_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 13,
+          "name": "declined_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        }
+      ],
+      "indexes": [
+        {
+          "def": "CREATE UNIQUE INDEX group_members_group_id_user_id_key ON public.group_members USING btree (group_id, user_id)",
+          "name": "group_members_group_id_user_id_key"
+        },
+        {
+          "def": "CREATE UNIQUE INDEX group_members_pkey ON public.group_members USING btree (id)",
+          "name": "group_members_pkey"
+        },
+        {
+          "def": "CREATE INDEX idx_group_members_group ON public.group_members USING btree (group_id)",
+          "name": "idx_group_members_group"
+        },
+        {
+          "def": "CREATE INDEX idx_group_members_group_user ON public.group_members USING btree (group_id, user_id)",
+          "name": "idx_group_members_group_user"
+        },
+        {
+          "def": "CREATE INDEX idx_group_members_role ON public.group_members USING btree (role)",
+          "name": "idx_group_members_role"
+        },
+        {
+          "def": "CREATE INDEX idx_group_members_status ON public.group_members USING btree (status)",
+          "name": "idx_group_members_status"
+        },
+        {
+          "def": "CREATE INDEX idx_group_members_user ON public.group_members USING btree (user_id)",
+          "name": "idx_group_members_user"
+        }
+      ]
+    },
+    {
+      "table_schema": "public",
+      "table_name": "groups",
+      "table_type": "table",
+      "table_comment": null,
+      "columns": [
+        {
+          "no": 1,
+          "name": "id",
+          "type": "uuid",
+          "comment": null,
+          "default": "uuid_generate_v4()",
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": true,
+          "identity_generation": null
+        },
+        {
+          "no": 2,
+          "name": "name",
+          "type": "character varying(100)",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 3,
+          "name": "description",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 4,
+          "name": "avatar_url",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 5,
+          "name": "cover_image_url",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 6,
+          "name": "owner_id",
+          "type": "uuid",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [
+            {
+              "on_delete": "CASCADE",
+              "on_update": "NO ACTION",
+              "ref_table": "users",
+              "constraint": "groups_owner_id_fkey",
+              "ref_column": "id",
+              "ref_schema": "public"
+            }
+          ],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 7,
+          "name": "members_count",
+          "type": "integer",
+          "comment": null,
+          "default": "0",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 8,
+          "name": "contributors_count",
+          "type": "integer",
+          "comment": null,
+          "default": "0",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 9,
+          "name": "followers_count",
+          "type": "integer",
+          "comment": null,
+          "default": "0",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 10,
+          "name": "is_private",
+          "type": "boolean",
+          "comment": null,
+          "default": "false",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 11,
+          "name": "requires_approval",
+          "type": "boolean",
+          "comment": null,
+          "default": "false",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 12,
+          "name": "rules",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 13,
+          "name": "tags",
+          "type": "jsonb",
+          "comment": null,
+          "default": "'{\"topics\": [], \"hashtags\": []}'::jsonb",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 14,
+          "name": "settings",
+          "type": "jsonb",
+          "comment": null,
+          "default": "'{\"member_invite\": true, \"post_moderation\": false, \"allow_member_posts\": false}'::jsonb",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 15,
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": "now()",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 16,
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": "now()",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 17,
+          "name": "is_core_group",
+          "type": "boolean",
+          "comment": "Indicates if this is a core system group (Friends, Family, Colleagues) automatically created for users",
+          "default": "false",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        }
+      ],
+      "indexes": [
+        {
+          "def": "CREATE UNIQUE INDEX groups_pkey ON public.groups USING btree (id)",
+          "name": "groups_pkey"
+        },
+        {
+          "def": "CREATE INDEX idx_groups_created_at ON public.groups USING btree (created_at DESC)",
+          "name": "idx_groups_created_at"
+        },
+        {
+          "def": "CREATE INDEX idx_groups_is_core_group ON public.groups USING btree (is_core_group)",
+          "name": "idx_groups_is_core_group"
+        },
+        {
+          "def": "CREATE INDEX idx_groups_is_private ON public.groups USING btree (is_private)",
+          "name": "idx_groups_is_private"
+        },
+        {
+          "def": "CREATE INDEX idx_groups_members_count ON public.groups USING btree (members_count DESC)",
+          "name": "idx_groups_members_count"
+        },
+        {
+          "def": "CREATE INDEX idx_groups_name ON public.groups USING btree (name)",
+          "name": "idx_groups_name"
+        },
+        {
+          "def": "CREATE INDEX idx_groups_owner ON public.groups USING btree (owner_id)",
+          "name": "idx_groups_owner"
+        }
+      ]
+    },
+    {
+      "table_schema": "public",
+      "table_name": "groups_empty_backup_20251009",
+      "table_type": "table",
+      "table_comment": null,
+      "columns": [
+        {
+          "no": 1,
+          "name": "id",
+          "type": "uuid",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 2,
+          "name": "name",
+          "type": "character varying(100)",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 3,
+          "name": "description",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 4,
+          "name": "avatar_url",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 5,
+          "name": "cover_image_url",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 6,
+          "name": "owner_id",
+          "type": "uuid",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 7,
+          "name": "members_count",
+          "type": "integer",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 8,
+          "name": "contributors_count",
+          "type": "integer",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 9,
+          "name": "followers_count",
+          "type": "integer",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 10,
+          "name": "is_private",
+          "type": "boolean",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 11,
+          "name": "requires_approval",
+          "type": "boolean",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 12,
+          "name": "rules",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 13,
+          "name": "tags",
+          "type": "jsonb",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 14,
+          "name": "settings",
+          "type": "jsonb",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 15,
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 16,
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 17,
+          "name": "is_core_group",
+          "type": "boolean",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        }
+      ],
+      "indexes": [
+        {
+          "def": null,
+          "name": null
+        }
+      ]
+    },
+    {
+      "table_schema": "public",
+      "table_name": "keyword_blacklist",
+      "table_type": "table",
+      "table_comment": null,
+      "columns": [
+        {
+          "no": 1,
+          "name": "id",
+          "type": "uuid",
+          "comment": null,
+          "default": "gen_random_uuid()",
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": true,
+          "identity_generation": null
+        },
+        {
+          "no": 2,
+          "name": "keyword",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 3,
+          "name": "category",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 4,
+          "name": "match_type",
+          "type": "text",
+          "comment": null,
+          "default": "'contains'::text",
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 5,
+          "name": "severity",
+          "type": "text",
+          "comment": null,
+          "default": "'high'::text",
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 6,
+          "name": "is_active",
+          "type": "boolean",
+          "comment": null,
+          "default": "true",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 7,
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": "timezone('utc'::text, now())",
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        }
+      ],
+      "indexes": [
+        {
+          "def": "CREATE INDEX idx_keyword_blacklist_category ON public.keyword_blacklist USING btree (category) WHERE (is_active = true)",
+          "name": "idx_keyword_blacklist_category"
+        },
+        {
+          "def": "CREATE INDEX idx_keyword_blacklist_keyword ON public.keyword_blacklist USING btree (keyword) WHERE (is_active = true)",
+          "name": "idx_keyword_blacklist_keyword"
+        },
+        {
+          "def": "CREATE INDEX idx_keyword_blacklist_pattern ON public.keyword_blacklist USING gin (keyword gin_trgm_ops) WHERE (is_active = true)",
+          "name": "idx_keyword_blacklist_pattern"
+        },
+        {
+          "def": "CREATE UNIQUE INDEX keyword_blacklist_keyword_key ON public.keyword_blacklist USING btree (keyword)",
+          "name": "keyword_blacklist_keyword_key"
+        },
+        {
+          "def": "CREATE UNIQUE INDEX keyword_blacklist_pkey ON public.keyword_blacklist USING btree (id)",
+          "name": "keyword_blacklist_pkey"
+        }
+      ]
+    },
+    {
+      "table_schema": "public",
+      "table_name": "notification_queue",
+      "table_type": "table",
+      "table_comment": null,
+      "columns": [
+        {
+          "no": 1,
+          "name": "id",
+          "type": "uuid",
+          "comment": null,
+          "default": "uuid_generate_v4()",
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": true,
+          "identity_generation": null
+        },
+        {
+          "no": 2,
+          "name": "user_ids",
+          "type": "uuid[]",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 3,
+          "name": "title",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 4,
+          "name": "message",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 5,
+          "name": "data",
+          "type": "jsonb",
+          "comment": null,
+          "default": "'{}'::jsonb",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 6,
+          "name": "status",
+          "type": "text",
+          "comment": null,
+          "default": "'pending'::text",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 7,
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": "now()",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 8,
+          "name": "processed_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 9,
+          "name": "error",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        }
+      ],
+      "indexes": [
+        {
+          "def": "CREATE UNIQUE INDEX notification_queue_pkey ON public.notification_queue USING btree (id)",
+          "name": "notification_queue_pkey"
+        }
+      ]
+    },
+    {
+      "table_schema": "public",
+      "table_name": "notifications",
+      "table_type": "table",
+      "table_comment": null,
+      "columns": [
+        {
+          "no": 1,
+          "name": "id",
+          "type": "uuid",
+          "comment": null,
+          "default": "uuid_generate_v4()",
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": true,
+          "identity_generation": null
+        },
+        {
+          "no": 2,
+          "name": "user_id",
+          "type": "uuid",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [
+            {
+              "on_delete": "CASCADE",
+              "on_update": "NO ACTION",
+              "ref_table": "users",
+              "constraint": "notifications_user_id_fkey",
+              "ref_column": "id",
+              "ref_schema": "public"
+            }
+          ],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 3,
+          "name": "type",
+          "type": "character varying(50)",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 4,
+          "name": "title",
+          "type": "character varying(200)",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 5,
+          "name": "message",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 6,
+          "name": "actor_user_id",
+          "type": "uuid",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [
+            {
+              "on_delete": "SET NULL",
+              "on_update": "NO ACTION",
+              "ref_table": "users",
+              "constraint": "notifications_actor_user_id_fkey",
+              "ref_column": "id",
+              "ref_schema": "public"
+            }
+          ],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 7,
+          "name": "post_id",
+          "type": "uuid",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [
+            {
+              "on_delete": "CASCADE",
+              "on_update": "NO ACTION",
+              "ref_table": "posts",
+              "constraint": "notifications_post_id_fkey",
+              "ref_column": "id",
+              "ref_schema": "public"
+            }
+          ],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 8,
+          "name": "group_id",
+          "type": "uuid",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [
+            {
+              "on_delete": "CASCADE",
+              "on_update": "NO ACTION",
+              "ref_table": "groups",
+              "constraint": "notifications_group_id_fkey",
+              "ref_column": "id",
+              "ref_schema": "public"
+            }
+          ],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 9,
+          "name": "comment_id",
+          "type": "uuid",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 10,
+          "name": "data",
+          "type": "jsonb",
+          "comment": null,
+          "default": "'{}'::jsonb",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 11,
+          "name": "requires_action",
+          "type": "boolean",
+          "comment": null,
+          "default": "false",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 12,
+          "name": "action_taken",
+          "type": "boolean",
+          "comment": null,
+          "default": "false",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 13,
+          "name": "is_read",
+          "type": "boolean",
+          "comment": null,
+          "default": "false",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 14,
+          "name": "read_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 15,
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": "now()",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        }
+      ],
+      "indexes": [
+        {
+          "def": "CREATE INDEX idx_notifications_actor ON public.notifications USING btree (actor_user_id)",
+          "name": "idx_notifications_actor"
+        },
+        {
+          "def": "CREATE INDEX idx_notifications_actor_user_id ON public.notifications USING btree (actor_user_id)",
+          "name": "idx_notifications_actor_user_id"
+        },
+        {
+          "def": "CREATE INDEX idx_notifications_created_at ON public.notifications USING btree (created_at DESC)",
+          "name": "idx_notifications_created_at"
+        },
+        {
+          "def": "CREATE INDEX idx_notifications_is_read ON public.notifications USING btree (is_read)",
+          "name": "idx_notifications_is_read"
+        },
+        {
+          "def": "CREATE INDEX idx_notifications_type ON public.notifications USING btree (type)",
+          "name": "idx_notifications_type"
+        },
+        {
+          "def": "CREATE INDEX idx_notifications_user ON public.notifications USING btree (user_id)",
+          "name": "idx_notifications_user"
+        },
+        {
+          "def": "CREATE UNIQUE INDEX notifications_pkey ON public.notifications USING btree (id)",
+          "name": "notifications_pkey"
+        }
+      ]
+    },
+    {
+      "table_schema": "public",
+      "table_name": "post_likes",
+      "table_type": "table",
+      "table_comment": null,
+      "columns": [
+        {
+          "no": 1,
+          "name": "id",
+          "type": "uuid",
+          "comment": null,
+          "default": "uuid_generate_v4()",
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": true,
+          "identity_generation": null
+        },
+        {
+          "no": 2,
+          "name": "post_id",
+          "type": "uuid",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [
+            {
+              "on_delete": "CASCADE",
+              "on_update": "NO ACTION",
+              "ref_table": "posts",
+              "constraint": "post_likes_post_id_fkey",
+              "ref_column": "id",
+              "ref_schema": "public"
+            }
+          ],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 3,
+          "name": "user_id",
+          "type": "uuid",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [
+            {
+              "on_delete": "CASCADE",
+              "on_update": "NO ACTION",
+              "ref_table": "users",
+              "constraint": "post_likes_user_id_fkey",
+              "ref_column": "id",
+              "ref_schema": "public"
+            }
+          ],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 4,
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": "now()",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        }
+      ],
+      "indexes": [
+        {
+          "def": "CREATE INDEX idx_post_likes_post ON public.post_likes USING btree (post_id)",
+          "name": "idx_post_likes_post"
+        },
+        {
+          "def": "CREATE INDEX idx_post_likes_user ON public.post_likes USING btree (user_id)",
+          "name": "idx_post_likes_user"
+        },
+        {
+          "def": "CREATE UNIQUE INDEX post_likes_pkey ON public.post_likes USING btree (id)",
+          "name": "post_likes_pkey"
+        },
+        {
+          "def": "CREATE UNIQUE INDEX post_likes_post_id_user_id_key ON public.post_likes USING btree (post_id, user_id)",
+          "name": "post_likes_post_id_user_id_key"
+        }
+      ]
+    },
+    {
+      "table_schema": "public",
+      "table_name": "post_listens",
+      "table_type": "table",
+      "table_comment": null,
+      "columns": [
+        {
+          "no": 1,
+          "name": "id",
+          "type": "uuid",
+          "comment": null,
+          "default": "uuid_generate_v4()",
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": true,
+          "identity_generation": null
+        },
+        {
+          "no": 2,
+          "name": "post_id",
+          "type": "uuid",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [
+            {
+              "on_delete": "CASCADE",
+              "on_update": "NO ACTION",
+              "ref_table": "posts",
+              "constraint": "post_listens_post_id_fkey",
+              "ref_column": "id",
+              "ref_schema": "public"
+            }
+          ],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 3,
+          "name": "user_id",
+          "type": "uuid",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [
+            {
+              "on_delete": "SET NULL",
+              "on_update": "NO ACTION",
+              "ref_table": "users",
+              "constraint": "post_listens_user_id_fkey",
+              "ref_column": "id",
+              "ref_schema": "public"
+            }
+          ],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 4,
+          "name": "session_id",
+          "type": "uuid",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 5,
+          "name": "duration_listened",
+          "type": "integer",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 6,
+          "name": "completion_rate",
+          "type": "numeric(5,2)",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 7,
+          "name": "ip_address",
+          "type": "inet",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 8,
+          "name": "user_agent",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 9,
+          "name": "referrer",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 10,
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": "now()",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 11,
+          "name": "skip_at_seconds",
+          "type": "integer",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 12,
+          "name": "device_type",
+          "type": "character varying(50)",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 13,
+          "name": "is_complete",
+          "type": "boolean",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        }
+      ],
+      "indexes": [
+        {
+          "def": "CREATE INDEX idx_post_listens_created_at ON public.post_listens USING btree (created_at DESC)",
+          "name": "idx_post_listens_created_at"
+        },
+        {
+          "def": "CREATE INDEX idx_post_listens_post ON public.post_listens USING btree (post_id)",
+          "name": "idx_post_listens_post"
+        },
+        {
+          "def": "CREATE INDEX idx_post_listens_post_id ON public.post_listens USING btree (post_id)",
+          "name": "idx_post_listens_post_id"
+        },
+        {
+          "def": "CREATE INDEX idx_post_listens_user ON public.post_listens USING btree (user_id)",
+          "name": "idx_post_listens_user"
+        },
+        {
+          "def": "CREATE INDEX idx_post_listens_user_complete ON public.post_listens USING btree (user_id, post_id, is_complete)",
+          "name": "idx_post_listens_user_complete"
+        },
+        {
+          "def": "CREATE INDEX idx_post_listens_user_created ON public.post_listens USING btree (user_id, created_at DESC)",
+          "name": "idx_post_listens_user_created"
+        },
+        {
+          "def": "CREATE INDEX idx_post_listens_user_id ON public.post_listens USING btree (user_id)",
+          "name": "idx_post_listens_user_id"
+        },
+        {
+          "def": "CREATE INDEX idx_post_listens_user_recent ON public.post_listens USING btree (user_id, created_at DESC)",
+          "name": "idx_post_listens_user_recent"
+        },
+        {
+          "def": "CREATE UNIQUE INDEX post_listens_pkey ON public.post_listens USING btree (id)",
+          "name": "post_listens_pkey"
+        }
+      ]
+    },
+    {
+      "table_schema": "public",
+      "table_name": "post_saves",
+      "table_type": "table",
+      "table_comment": null,
+      "columns": [
+        {
+          "no": 1,
+          "name": "id",
+          "type": "uuid",
+          "comment": null,
+          "default": "uuid_generate_v4()",
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": true,
+          "identity_generation": null
+        },
+        {
+          "no": 2,
+          "name": "post_id",
+          "type": "uuid",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [
+            {
+              "on_delete": "CASCADE",
+              "on_update": "NO ACTION",
+              "ref_table": "posts",
+              "constraint": "post_saves_post_id_fkey",
+              "ref_column": "id",
+              "ref_schema": "public"
+            }
+          ],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 3,
+          "name": "user_id",
+          "type": "uuid",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [
+            {
+              "on_delete": "CASCADE",
+              "on_update": "NO ACTION",
+              "ref_table": "users",
+              "constraint": "post_saves_user_id_fkey",
+              "ref_column": "id",
+              "ref_schema": "public"
+            }
+          ],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 4,
+          "name": "folder_id",
+          "type": "uuid",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [
+            {
+              "on_delete": "SET NULL",
+              "on_update": "NO ACTION",
+              "ref_table": "archive_folders",
+              "constraint": "post_saves_folder_id_fkey",
+              "ref_column": "id",
+              "ref_schema": "public"
+            }
+          ],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 5,
+          "name": "notes",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 6,
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": "now()",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        }
+      ],
+      "indexes": [
+        {
+          "def": "CREATE INDEX idx_post_saves_folder ON public.post_saves USING btree (folder_id)",
+          "name": "idx_post_saves_folder"
+        },
+        {
+          "def": "CREATE INDEX idx_post_saves_post ON public.post_saves USING btree (post_id)",
+          "name": "idx_post_saves_post"
+        },
+        {
+          "def": "CREATE INDEX idx_post_saves_post_id ON public.post_saves USING btree (post_id)",
+          "name": "idx_post_saves_post_id"
+        },
+        {
+          "def": "CREATE INDEX idx_post_saves_user ON public.post_saves USING btree (user_id)",
+          "name": "idx_post_saves_user"
+        },
+        {
+          "def": "CREATE INDEX idx_post_saves_user_id ON public.post_saves USING btree (user_id)",
+          "name": "idx_post_saves_user_id"
+        },
+        {
+          "def": "CREATE UNIQUE INDEX post_saves_pkey ON public.post_saves USING btree (id)",
+          "name": "post_saves_pkey"
+        },
+        {
+          "def": "CREATE UNIQUE INDEX post_saves_post_id_user_id_key ON public.post_saves USING btree (post_id, user_id)",
+          "name": "post_saves_post_id_user_id_key"
+        }
+      ]
+    },
+    {
+      "table_schema": "public",
+      "table_name": "post_scores_cache",
+      "table_type": "table",
+      "table_comment": null,
+      "columns": [
+        {
+          "no": 1,
+          "name": "id",
+          "type": "uuid",
+          "comment": null,
+          "default": "uuid_generate_v4()",
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": true,
+          "identity_generation": null
+        },
+        {
+          "no": 2,
+          "name": "user_id",
+          "type": "uuid",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [
+            {
+              "on_delete": "CASCADE",
+              "on_update": "NO ACTION",
+              "ref_table": "users",
+              "constraint": "post_scores_cache_user_id_fkey",
+              "ref_column": "id",
+              "ref_schema": "auth"
+            }
+          ],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 3,
+          "name": "post_id",
+          "type": "uuid",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [
+            {
+              "on_delete": "CASCADE",
+              "on_update": "NO ACTION",
+              "ref_table": "posts",
+              "constraint": "post_scores_cache_post_id_fkey",
+              "ref_column": "id",
+              "ref_schema": "public"
+            }
+          ],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 4,
+          "name": "score",
+          "type": "double precision",
+          "comment": null,
+          "default": "0",
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 5,
+          "name": "score_components",
+          "type": "jsonb",
+          "comment": null,
+          "default": "'{}'::jsonb",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 6,
+          "name": "calculated_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": "now()",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 7,
+          "name": "expires_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": "(now() + '06:00:00'::interval)",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        }
+      ],
+      "indexes": [
+        {
+          "def": "CREATE INDEX idx_post_scores_expires ON public.post_scores_cache USING btree (expires_at)",
+          "name": "idx_post_scores_expires"
+        },
+        {
+          "def": "CREATE INDEX idx_post_scores_score ON public.post_scores_cache USING btree (user_id, score DESC)",
+          "name": "idx_post_scores_score"
+        },
+        {
+          "def": "CREATE INDEX idx_post_scores_user_id ON public.post_scores_cache USING btree (user_id)",
+          "name": "idx_post_scores_user_id"
+        },
+        {
+          "def": "CREATE UNIQUE INDEX post_scores_cache_pkey ON public.post_scores_cache USING btree (id)",
+          "name": "post_scores_cache_pkey"
+        },
+        {
+          "def": "CREATE UNIQUE INDEX post_scores_cache_user_id_post_id_key ON public.post_scores_cache USING btree (user_id, post_id)",
+          "name": "post_scores_cache_user_id_post_id_key"
+        }
+      ]
+    },
+    {
+      "table_schema": "public",
+      "table_name": "post_shares",
+      "table_type": "table",
+      "table_comment": null,
+      "columns": [
+        {
+          "no": 1,
+          "name": "id",
+          "type": "uuid",
+          "comment": null,
+          "default": "uuid_generate_v4()",
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": true,
+          "identity_generation": null
+        },
+        {
+          "no": 2,
+          "name": "post_id",
+          "type": "uuid",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [
+            {
+              "on_delete": "CASCADE",
+              "on_update": "NO ACTION",
+              "ref_table": "posts",
+              "constraint": "post_shares_post_id_fkey",
+              "ref_column": "id",
+              "ref_schema": "public"
+            }
+          ],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 3,
+          "name": "user_id",
+          "type": "uuid",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [
+            {
+              "on_delete": "CASCADE",
+              "on_update": "NO ACTION",
+              "ref_table": "users",
+              "constraint": "post_shares_user_id_fkey",
+              "ref_column": "id",
+              "ref_schema": "public"
+            }
+          ],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 4,
+          "name": "share_type",
+          "type": "character varying(20)",
+          "comment": null,
+          "default": "'repost'::character varying",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 5,
+          "name": "share_message",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 6,
+          "name": "platform",
+          "type": "character varying(50)",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 7,
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": "now()",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 8,
+          "name": "shared_with_user_ids",
+          "type": "uuid[]",
+          "comment": null,
+          "default": "'{}'::uuid[]",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 9,
+          "name": "is_direct_share",
+          "type": "boolean",
+          "comment": null,
+          "default": "false",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        }
+      ],
+      "indexes": [
+        {
+          "def": "CREATE INDEX idx_post_shares_created ON public.post_shares USING btree (user_id, created_at DESC)",
+          "name": "idx_post_shares_created"
+        },
+        {
+          "def": "CREATE INDEX idx_post_shares_created_at ON public.post_shares USING btree (created_at DESC)",
+          "name": "idx_post_shares_created_at"
+        },
+        {
+          "def": "CREATE INDEX idx_post_shares_post ON public.post_shares USING btree (post_id)",
+          "name": "idx_post_shares_post"
+        },
+        {
+          "def": "CREATE INDEX idx_post_shares_post_id ON public.post_shares USING btree (post_id)",
+          "name": "idx_post_shares_post_id"
+        },
+        {
+          "def": "CREATE INDEX idx_post_shares_recipients ON public.post_shares USING gin (shared_with_user_ids) WHERE (is_direct_share = true)",
+          "name": "idx_post_shares_recipients"
+        },
+        {
+          "def": "CREATE INDEX idx_post_shares_shared_with ON public.post_shares USING gin (shared_with_user_ids)",
+          "name": "idx_post_shares_shared_with"
+        },
+        {
+          "def": "CREATE INDEX idx_post_shares_user ON public.post_shares USING btree (user_id)",
+          "name": "idx_post_shares_user"
+        },
+        {
+          "def": "CREATE INDEX idx_post_shares_user_created ON public.post_shares USING btree (user_id, created_at DESC)",
+          "name": "idx_post_shares_user_created"
+        },
+        {
+          "def": "CREATE INDEX idx_post_shares_user_id ON public.post_shares USING btree (user_id)",
+          "name": "idx_post_shares_user_id"
+        },
+        {
+          "def": "CREATE UNIQUE INDEX post_shares_pkey ON public.post_shares USING btree (id)",
+          "name": "post_shares_pkey"
+        }
+      ]
+    },
+    {
+      "table_schema": "public",
+      "table_name": "posts",
+      "table_type": "table",
+      "table_comment": null,
+      "columns": [
+        {
+          "no": 1,
+          "name": "id",
+          "type": "uuid",
+          "comment": null,
+          "default": "uuid_generate_v4()",
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": true,
+          "identity_generation": null
+        },
+        {
+          "no": 2,
+          "name": "user_id",
+          "type": "uuid",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [
+            {
+              "on_delete": "CASCADE",
+              "on_update": "NO ACTION",
+              "ref_table": "users",
+              "constraint": "posts_user_id_fkey",
+              "ref_column": "id",
+              "ref_schema": "public"
+            }
+          ],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 3,
+          "name": "group_id",
+          "type": "uuid",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [
+            {
+              "on_delete": "SET NULL",
+              "on_update": "NO ACTION",
+              "ref_table": "groups",
+              "constraint": "posts_group_id_fkey",
+              "ref_column": "id",
+              "ref_schema": "public"
+            }
+          ],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 4,
+          "name": "title",
+          "type": "character varying(200)",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 5,
+          "name": "description",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 6,
+          "name": "audio_url",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 7,
+          "name": "audio_duration",
+          "type": "integer",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 8,
+          "name": "audio_size",
+          "type": "integer",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 9,
+          "name": "waveform_data",
+          "type": "jsonb",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 10,
+          "name": "transcript",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 11,
+          "name": "audience_type",
+          "type": "character varying(30)",
+          "comment": null,
+          "default": "'public'::character varying",
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 12,
+          "name": "specific_audience_ids",
+          "type": "uuid[]",
+          "comment": null,
+          "default": "'{}'::uuid[]",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 13,
+          "name": "expires_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 14,
+          "name": "is_expired",
+          "type": "boolean",
+          "comment": null,
+          "default": "false",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 15,
+          "name": "tags",
+          "type": "jsonb",
+          "comment": null,
+          "default": "'{\"topics\": [], \"hashtags\": []}'::jsonb",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 16,
+          "name": "related_link",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 17,
+          "name": "language",
+          "type": "character varying(10)",
+          "comment": null,
+          "default": "'en'::character varying",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 18,
+          "name": "listens_count",
+          "type": "integer",
+          "comment": null,
+          "default": "0",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 19,
+          "name": "likes_count",
+          "type": "integer",
+          "comment": null,
+          "default": "0",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 20,
+          "name": "saves_count",
+          "type": "integer",
+          "comment": null,
+          "default": "0",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 21,
+          "name": "shares_count",
+          "type": "integer",
+          "comment": null,
+          "default": "0",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 23,
+          "name": "link_clicks_count",
+          "type": "integer",
+          "comment": null,
+          "default": "0",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 24,
+          "name": "is_pinned",
+          "type": "boolean",
+          "comment": null,
+          "default": "false",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 25,
+          "name": "is_featured",
+          "type": "boolean",
+          "comment": null,
+          "default": "false",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 26,
+          "name": "approval_status",
+          "type": "character varying(20)",
+          "comment": null,
+          "default": "'approved'::character varying",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 27,
+          "name": "moderation_notes",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 28,
+          "name": "published_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": "now()",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 29,
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": "now()",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 30,
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": "now()",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 31,
+          "name": "location",
+          "type": "text",
+          "comment": "Geographic location associated with the post (city, region, country format)",
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 32,
+          "name": "trending_notified",
+          "type": "boolean",
+          "comment": "Flag indicating if trending notification has been sent for this post",
+          "default": "false",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 33,
+          "name": "trending_at",
+          "type": "timestamp with time zone",
+          "comment": "Timestamp when the post became trending (500+ listens)",
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 34,
+          "name": "series_id",
+          "type": "uuid",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [
+            {
+              "on_delete": "SET NULL",
+              "on_update": "NO ACTION",
+              "ref_table": "series",
+              "constraint": "posts_series_id_fkey",
+              "ref_column": "id",
+              "ref_schema": "public"
+            }
+          ],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 35,
+          "name": "chapter_number",
+          "type": "integer",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 36,
+          "name": "chapter_title",
+          "type": "character varying(255)",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        }
+      ],
+      "indexes": [
+        {
+          "def": "CREATE INDEX idx_posts_approval_status ON public.posts USING btree (approval_status)",
+          "name": "idx_posts_approval_status"
+        },
+        {
+          "def": "CREATE INDEX idx_posts_audience ON public.posts USING btree (audience_type)",
+          "name": "idx_posts_audience"
+        },
+        {
+          "def": "CREATE INDEX idx_posts_audience_created ON public.posts USING btree (audience_type, created_at DESC) WHERE (is_expired = false)",
+          "name": "idx_posts_audience_created"
+        },
+        {
+          "def": "CREATE INDEX idx_posts_audience_expired ON public.posts USING btree (audience_type, is_expired, created_at DESC)",
+          "name": "idx_posts_audience_expired"
+        },
+        {
+          "def": "CREATE INDEX idx_posts_audience_specific ON public.posts USING btree (audience_type, expires_at) WHERE ((audience_type)::text = 'specific'::text)",
+          "name": "idx_posts_audience_specific"
+        },
+        {
+          "def": "CREATE INDEX idx_posts_audience_type ON public.posts USING btree (audience_type)",
+          "name": "idx_posts_audience_type"
+        },
+        {
+          "def": "CREATE INDEX idx_posts_audience_type_specific ON public.posts USING btree (audience_type, user_id) WHERE ((audience_type)::text = 'specific'::text)",
+          "name": "idx_posts_audience_type_specific"
+        },
+        {
+          "def": "CREATE INDEX idx_posts_created_at_public ON public.posts USING btree (created_at DESC) WHERE (((audience_type)::text = 'public'::text) AND (is_expired = false))",
+          "name": "idx_posts_created_at_public"
+        },
+        {
+          "def": "CREATE INDEX idx_posts_created_expired ON public.posts USING btree (created_at DESC, is_expired)",
+          "name": "idx_posts_created_expired"
+        },
+        {
+          "def": "CREATE INDEX idx_posts_engagement ON public.posts USING btree (listens_count DESC NULLS LAST, saves_count DESC NULLS LAST, shares_count DESC NULLS LAST) WHERE ((audience_type)::text = 'public'::text)",
+          "name": "idx_posts_engagement"
+        },
+        {
+          "def": "CREATE INDEX idx_posts_expires_at ON public.posts USING btree (expires_at)",
+          "name": "idx_posts_expires_at"
+        },
+        {
+          "def": "CREATE INDEX idx_posts_feed_query ON public.posts USING btree (audience_type, is_expired, created_at DESC)",
+          "name": "idx_posts_feed_query"
+        },
+        {
+          "def": "CREATE INDEX idx_posts_group ON public.posts USING btree (group_id)",
+          "name": "idx_posts_group"
+        },
+        {
+          "def": "CREATE INDEX idx_posts_is_pinned ON public.posts USING btree (is_pinned)",
+          "name": "idx_posts_is_pinned"
+        },
+        {
+          "def": "CREATE INDEX idx_posts_listens ON public.posts USING btree (listens_count DESC)",
+          "name": "idx_posts_listens"
+        },
+        {
+          "def": "CREATE INDEX idx_posts_location ON public.posts USING btree (location) WHERE (location IS NOT NULL)",
+          "name": "idx_posts_location"
+        },
+        {
+          "def": "CREATE INDEX idx_posts_published_at ON public.posts USING btree (published_at DESC)",
+          "name": "idx_posts_published_at"
+        },
+        {
+          "def": "CREATE INDEX idx_posts_series_id ON public.posts USING btree (series_id)",
+          "name": "idx_posts_series_id"
+        },
+        {
+          "def": "CREATE INDEX idx_posts_specific_audience_ids ON public.posts USING gin (specific_audience_ids) WHERE ((audience_type)::text = 'specific'::text)",
+          "name": "idx_posts_specific_audience_ids"
+        },
+        {
+          "def": "CREATE INDEX idx_posts_specific_ids ON public.posts USING gin (specific_audience_ids)",
+          "name": "idx_posts_specific_ids"
+        },
+        {
+          "def": "CREATE INDEX idx_posts_tags ON public.posts USING gin (tags)",
+          "name": "idx_posts_tags"
+        },
+        {
+          "def": "CREATE INDEX idx_posts_tags_gin ON public.posts USING gin (tags)",
+          "name": "idx_posts_tags_gin"
+        },
+        {
+          "def": "CREATE INDEX idx_posts_tags_hashtags ON public.posts USING gin (((tags -> 'hashtags'::text)))",
+          "name": "idx_posts_tags_hashtags"
+        },
+        {
+          "def": "CREATE INDEX idx_posts_tags_topics ON public.posts USING gin (((tags -> 'topics'::text)))",
+          "name": "idx_posts_tags_topics"
+        },
+        {
+          "def": "CREATE INDEX idx_posts_trending ON public.posts USING btree (listens_count, trending_notified, audience_type) WHERE ((listens_count >= 500) AND ((audience_type)::text = 'public'::text))",
+          "name": "idx_posts_trending"
+        },
+        {
+          "def": "CREATE INDEX idx_posts_trending_at ON public.posts USING btree (trending_at DESC) WHERE (trending_at IS NOT NULL)",
+          "name": "idx_posts_trending_at"
+        },
+        {
+          "def": "CREATE INDEX idx_posts_trending_optimized ON public.posts USING btree (created_at DESC, listens_count DESC, saves_count DESC, shares_count DESC, audience_type, is_expired) WHERE (((audience_type)::text = 'public'::text) AND ((is_expired = false) OR (is_expired IS NULL)))",
+          "name": "idx_posts_trending_optimized"
+        },
+        {
+          "def": "CREATE INDEX idx_posts_user ON public.posts USING btree (user_id)",
+          "name": "idx_posts_user"
+        },
+        {
+          "def": "CREATE INDEX idx_posts_user_audience ON public.posts USING btree (user_id, audience_type, is_expired)",
+          "name": "idx_posts_user_audience"
+        },
+        {
+          "def": "CREATE INDEX idx_posts_user_audio ON public.posts USING btree (user_id, created_at DESC) WHERE (audio_url IS NOT NULL)",
+          "name": "idx_posts_user_audio"
+        },
+        {
+          "def": "CREATE UNIQUE INDEX posts_pkey ON public.posts USING btree (id)",
+          "name": "posts_pkey"
+        }
+      ]
+    },
+    {
+      "table_schema": "public",
+      "table_name": "purchase_history",
+      "table_type": "table",
+      "table_comment": null,
+      "columns": [
+        {
+          "no": 1,
+          "name": "id",
+          "type": "uuid",
+          "comment": null,
+          "default": "gen_random_uuid()",
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": true,
+          "identity_generation": null
+        },
+        {
+          "no": 2,
+          "name": "user_id",
+          "type": "uuid",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [
+            {
+              "on_delete": "CASCADE",
+              "on_update": "NO ACTION",
+              "ref_table": "users",
+              "constraint": "purchase_history_user_id_fkey",
+              "ref_column": "id",
+              "ref_schema": "public"
+            }
+          ],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 3,
+          "name": "product_id",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 4,
+          "name": "product_name",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 5,
+          "name": "credits_purchased",
+          "type": "integer",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 6,
+          "name": "price_paid",
+          "type": "numeric(10,2)",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 7,
+          "name": "currency",
+          "type": "text",
+          "comment": null,
+          "default": "'USD'::text",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 8,
+          "name": "purchase_date",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": "now()",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 9,
+          "name": "platform",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 10,
+          "name": "transaction_id",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 11,
+          "name": "consumed",
+          "type": "boolean",
+          "comment": null,
+          "default": "false",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 12,
+          "name": "consumed_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 13,
+          "name": "metadata",
+          "type": "jsonb",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        }
+      ],
+      "indexes": [
+        {
+          "def": "CREATE INDEX idx_purchase_history_purchase_date ON public.purchase_history USING btree (purchase_date)",
+          "name": "idx_purchase_history_purchase_date"
+        },
+        {
+          "def": "CREATE INDEX idx_purchase_history_user_id ON public.purchase_history USING btree (user_id)",
+          "name": "idx_purchase_history_user_id"
+        },
+        {
+          "def": "CREATE UNIQUE INDEX purchase_history_pkey ON public.purchase_history USING btree (id)",
+          "name": "purchase_history_pkey"
+        }
+      ]
+    },
+    {
+      "table_schema": "public",
+      "table_name": "relationship_tags",
+      "table_type": "table",
+      "table_comment": null,
+      "columns": [
+        {
+          "no": 1,
+          "name": "id",
+          "type": "uuid",
+          "comment": null,
+          "default": "gen_random_uuid()",
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": true,
+          "identity_generation": null
+        },
+        {
+          "no": 2,
+          "name": "user_id",
+          "type": "uuid",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [
+            {
+              "on_delete": "CASCADE",
+              "on_update": "NO ACTION",
+              "ref_table": "users",
+              "constraint": "relationship_tags_user_id_fkey",
+              "ref_column": "id",
+              "ref_schema": "public"
+            }
+          ],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 3,
+          "name": "tagged_user_id",
+          "type": "uuid",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [
+            {
+              "on_delete": "CASCADE",
+              "on_update": "NO ACTION",
+              "ref_table": "users",
+              "constraint": "relationship_tags_tagged_user_id_fkey",
+              "ref_column": "id",
+              "ref_schema": "public"
+            }
+          ],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 4,
+          "name": "tag_type",
+          "type": "relationship_type",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 5,
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": "now()",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 6,
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": "now()",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 7,
+          "name": "is_default_folder",
+          "type": "boolean",
+          "comment": "Indicates if this is a default system folder (Friends, Family, Colleagues) that cannot be deleted",
+          "default": "false",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        }
+      ],
+      "indexes": [
+        {
+          "def": "CREATE INDEX idx_relationship_tags_bidirectional ON public.relationship_tags USING btree (user_id, tagged_user_id, tag_type)",
+          "name": "idx_relationship_tags_bidirectional"
+        },
+        {
+          "def": "CREATE INDEX idx_relationship_tags_is_default ON public.relationship_tags USING btree (is_default_folder)",
+          "name": "idx_relationship_tags_is_default"
+        },
+        {
+          "def": "CREATE INDEX idx_relationship_tags_lookup ON public.relationship_tags USING btree (user_id, tag_type, tagged_user_id)",
+          "name": "idx_relationship_tags_lookup"
+        },
+        {
+          "def": "CREATE INDEX idx_relationship_tags_tag_type ON public.relationship_tags USING btree (tag_type)",
+          "name": "idx_relationship_tags_tag_type"
+        },
+        {
+          "def": "CREATE INDEX idx_relationship_tags_tagged_user_id ON public.relationship_tags USING btree (tagged_user_id)",
+          "name": "idx_relationship_tags_tagged_user_id"
+        },
+        {
+          "def": "CREATE INDEX idx_relationship_tags_user_id ON public.relationship_tags USING btree (user_id)",
+          "name": "idx_relationship_tags_user_id"
+        },
+        {
+          "def": "CREATE INDEX idx_relationship_tags_user_type ON public.relationship_tags USING btree (user_id, tag_type)",
+          "name": "idx_relationship_tags_user_type"
+        },
+        {
+          "def": "CREATE UNIQUE INDEX relationship_tags_pkey ON public.relationship_tags USING btree (id)",
+          "name": "relationship_tags_pkey"
+        },
+        {
+          "def": "CREATE UNIQUE INDEX relationship_tags_user_id_tagged_user_id_tag_type_key ON public.relationship_tags USING btree (user_id, tagged_user_id, tag_type)",
+          "name": "relationship_tags_user_id_tagged_user_id_tag_type_key"
+        }
+      ]
+    },
+    {
+      "table_schema": "public",
+      "table_name": "reserved_handles",
+      "table_type": "table",
+      "table_comment": null,
+      "columns": [
+        {
+          "no": 1,
+          "name": "id",
+          "type": "uuid",
+          "comment": null,
+          "default": "gen_random_uuid()",
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": true,
+          "identity_generation": null
+        },
+        {
+          "no": 2,
+          "name": "handle",
+          "type": "character varying(255)",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 3,
+          "name": "reason",
+          "type": "character varying(50)",
+          "comment": null,
+          "default": "'reserved'::character varying",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 4,
+          "name": "reserved_for",
+          "type": "character varying(255)",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 5,
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": "now()",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 6,
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": "now()",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        }
+      ],
+      "indexes": [
+        {
+          "def": "CREATE INDEX idx_reserved_handles_handle ON public.reserved_handles USING btree (lower((handle)::text))",
+          "name": "idx_reserved_handles_handle"
+        },
+        {
+          "def": "CREATE UNIQUE INDEX reserved_handles_handle_key ON public.reserved_handles USING btree (handle)",
+          "name": "reserved_handles_handle_key"
+        },
+        {
+          "def": "CREATE UNIQUE INDEX reserved_handles_pkey ON public.reserved_handles USING btree (id)",
+          "name": "reserved_handles_pkey"
+        }
+      ]
+    },
+    {
+      "table_schema": "public",
+      "table_name": "schema_migrations",
+      "table_type": "table",
+      "table_comment": null,
+      "columns": [
+        {
+          "no": 1,
+          "name": "version",
+          "type": "integer",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": true,
+          "identity_generation": null
+        },
+        {
+          "no": 2,
+          "name": "applied_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": "now()",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 3,
+          "name": "description",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        }
+      ],
+      "indexes": [
+        {
+          "def": "CREATE UNIQUE INDEX schema_migrations_pkey ON public.schema_migrations USING btree (version)",
+          "name": "schema_migrations_pkey"
+        }
+      ]
+    },
+    {
+      "table_schema": "public",
+      "table_name": "series",
+      "table_type": "table",
+      "table_comment": null,
+      "columns": [
+        {
+          "no": 1,
+          "name": "id",
+          "type": "uuid",
+          "comment": null,
+          "default": "gen_random_uuid()",
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": true,
+          "identity_generation": null
+        },
+        {
+          "no": 2,
+          "name": "user_id",
+          "type": "uuid",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [
+            {
+              "on_delete": "CASCADE",
+              "on_update": "NO ACTION",
+              "ref_table": "users",
+              "constraint": "series_user_id_fkey",
+              "ref_column": "id",
+              "ref_schema": "public"
+            }
+          ],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 3,
+          "name": "title",
+          "type": "character varying(255)",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 4,
+          "name": "description",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 5,
+          "name": "cover_image_url",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 6,
+          "name": "tags",
+          "type": "jsonb",
+          "comment": null,
+          "default": "'{}'::jsonb",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 7,
+          "name": "total_chapters",
+          "type": "integer",
+          "comment": null,
+          "default": "0",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 8,
+          "name": "total_duration",
+          "type": "integer",
+          "comment": null,
+          "default": "0",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 9,
+          "name": "is_complete",
+          "type": "boolean",
+          "comment": null,
+          "default": "false",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 10,
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": "now()",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 11,
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": "now()",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        }
+      ],
+      "indexes": [
+        {
+          "def": "CREATE INDEX idx_series_user_id ON public.series USING btree (user_id)",
+          "name": "idx_series_user_id"
+        },
+        {
+          "def": "CREATE UNIQUE INDEX series_pkey ON public.series USING btree (id)",
+          "name": "series_pkey"
+        }
+      ]
+    },
+    {
+      "table_schema": "public",
+      "table_name": "suspicious_tlds",
+      "table_type": "table",
+      "table_comment": null,
+      "columns": [
+        {
+          "no": 1,
+          "name": "id",
+          "type": "uuid",
+          "comment": null,
+          "default": "gen_random_uuid()",
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": true,
+          "identity_generation": null
+        },
+        {
+          "no": 2,
+          "name": "tld",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 3,
+          "name": "reason",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 4,
+          "name": "severity",
+          "type": "text",
+          "comment": null,
+          "default": "'medium'::text",
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 5,
+          "name": "is_active",
+          "type": "boolean",
+          "comment": null,
+          "default": "true",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 6,
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": "timezone('utc'::text, now())",
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        }
+      ],
+      "indexes": [
+        {
+          "def": "CREATE INDEX idx_suspicious_tlds_tld ON public.suspicious_tlds USING btree (tld) WHERE (is_active = true)",
+          "name": "idx_suspicious_tlds_tld"
+        },
+        {
+          "def": "CREATE UNIQUE INDEX suspicious_tlds_pkey ON public.suspicious_tlds USING btree (id)",
+          "name": "suspicious_tlds_pkey"
+        },
+        {
+          "def": "CREATE UNIQUE INDEX suspicious_tlds_tld_key ON public.suspicious_tlds USING btree (tld)",
+          "name": "suspicious_tlds_tld_key"
+        }
+      ]
+    },
+    {
+      "table_schema": "public",
+      "table_name": "user_engagement_events",
+      "table_type": "table",
+      "table_comment": null,
+      "columns": [
+        {
+          "no": 1,
+          "name": "id",
+          "type": "uuid",
+          "comment": null,
+          "default": "uuid_generate_v4()",
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": true,
+          "identity_generation": null
+        },
+        {
+          "no": 2,
+          "name": "user_id",
+          "type": "uuid",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [
+            {
+              "on_delete": "CASCADE",
+              "on_update": "NO ACTION",
+              "ref_table": "users",
+              "constraint": "user_engagement_events_user_id_fkey",
+              "ref_column": "id",
+              "ref_schema": "auth"
+            }
+          ],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 3,
+          "name": "post_id",
+          "type": "uuid",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [
+            {
+              "on_delete": "CASCADE",
+              "on_update": "NO ACTION",
+              "ref_table": "posts",
+              "constraint": "user_engagement_events_post_id_fkey",
+              "ref_column": "id",
+              "ref_schema": "public"
+            }
+          ],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 4,
+          "name": "event_type",
+          "type": "character varying(50)",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 5,
+          "name": "metadata",
+          "type": "jsonb",
+          "comment": null,
+          "default": "'{}'::jsonb",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 6,
+          "name": "session_id",
+          "type": "uuid",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 7,
+          "name": "device_info",
+          "type": "jsonb",
+          "comment": null,
+          "default": "'{}'::jsonb",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 8,
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": "now()",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        }
+      ],
+      "indexes": [
+        {
+          "def": "CREATE INDEX idx_engagement_events_composite ON public.user_engagement_events USING btree (user_id, post_id, event_type)",
+          "name": "idx_engagement_events_composite"
+        },
+        {
+          "def": "CREATE INDEX idx_engagement_events_created_at ON public.user_engagement_events USING btree (created_at DESC)",
+          "name": "idx_engagement_events_created_at"
+        },
+        {
+          "def": "CREATE INDEX idx_engagement_events_post_id ON public.user_engagement_events USING btree (post_id)",
+          "name": "idx_engagement_events_post_id"
+        },
+        {
+          "def": "CREATE INDEX idx_engagement_events_session ON public.user_engagement_events USING btree (session_id) WHERE (session_id IS NOT NULL)",
+          "name": "idx_engagement_events_session"
+        },
+        {
+          "def": "CREATE INDEX idx_engagement_events_user_id ON public.user_engagement_events USING btree (user_id)",
+          "name": "idx_engagement_events_user_id"
+        },
+        {
+          "def": "CREATE UNIQUE INDEX user_engagement_events_pkey ON public.user_engagement_events USING btree (id)",
+          "name": "user_engagement_events_pkey"
+        }
+      ]
+    },
+    {
+      "table_schema": "public",
+      "table_name": "user_feature_overrides",
+      "table_type": "table",
+      "table_comment": "Stores user-specific feature overrides that take precedence over global settings",
+      "columns": [
+        {
+          "no": 1,
+          "name": "id",
+          "type": "uuid",
+          "comment": null,
+          "default": "uuid_generate_v4()",
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": true,
+          "identity_generation": null
+        },
+        {
+          "no": 2,
+          "name": "user_id",
+          "type": "uuid",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [
+            {
+              "on_delete": "CASCADE",
+              "on_update": "NO ACTION",
+              "ref_table": "users",
+              "constraint": "user_feature_overrides_user_id_fkey",
+              "ref_column": "id",
+              "ref_schema": "auth"
+            }
+          ],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 3,
+          "name": "feature_key",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 4,
+          "name": "is_enabled",
+          "type": "boolean",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 5,
+          "name": "reason",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 6,
+          "name": "metadata",
+          "type": "jsonb",
+          "comment": null,
+          "default": "'{}'::jsonb",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 7,
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": "now()",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 8,
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": "now()",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        }
+      ],
+      "indexes": [
+        {
+          "def": "CREATE INDEX idx_user_feature_overrides_lookup ON public.user_feature_overrides USING btree (user_id, feature_key)",
+          "name": "idx_user_feature_overrides_lookup"
+        },
+        {
+          "def": "CREATE UNIQUE INDEX user_feature_overrides_pkey ON public.user_feature_overrides USING btree (id)",
+          "name": "user_feature_overrides_pkey"
+        },
+        {
+          "def": "CREATE UNIQUE INDEX user_feature_overrides_user_id_feature_key_key ON public.user_feature_overrides USING btree (user_id, feature_key)",
+          "name": "user_feature_overrides_user_id_feature_key_key"
+        }
+      ]
+    },
+    {
+      "table_schema": "public",
+      "table_name": "user_preferences",
+      "table_type": "table",
+      "table_comment": null,
+      "columns": [
+        {
+          "no": 1,
+          "name": "id",
+          "type": "uuid",
+          "comment": null,
+          "default": "uuid_generate_v4()",
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": true,
+          "identity_generation": null
+        },
+        {
+          "no": 2,
+          "name": "user_id",
+          "type": "uuid",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [
+            {
+              "on_delete": "CASCADE",
+              "on_update": "NO ACTION",
+              "ref_table": "users",
+              "constraint": "user_preferences_user_id_fkey",
+              "ref_column": "id",
+              "ref_schema": "auth"
+            }
+          ],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 3,
+          "name": "preferred_topics",
+          "type": "jsonb",
+          "comment": null,
+          "default": "'{}'::jsonb",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 4,
+          "name": "preferred_creators",
+          "type": "jsonb",
+          "comment": null,
+          "default": "'{}'::jsonb",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 5,
+          "name": "preferred_duration_range",
+          "type": "int4range",
+          "comment": null,
+          "default": "'[30,121)'::int4range",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 6,
+          "name": "preferred_languages",
+          "type": "text[]",
+          "comment": null,
+          "default": "ARRAY['en'::text]",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 7,
+          "name": "active_hours",
+          "type": "jsonb",
+          "comment": null,
+          "default": "'{}'::jsonb",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 8,
+          "name": "active_days",
+          "type": "jsonb",
+          "comment": null,
+          "default": "'{}'::jsonb",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 9,
+          "name": "engagement_weights",
+          "type": "jsonb",
+          "comment": null,
+          "default": "'{\"like\": 0.8, \"save\": 0.9, \"share\": 0.95, \"comment\": 0.85, \"skip_late\": -0.1, \"skip_early\": -0.5, \"listen_complete\": 1.0}'::jsonb",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 10,
+          "name": "total_listens",
+          "type": "integer",
+          "comment": null,
+          "default": "0",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 11,
+          "name": "avg_completion_rate",
+          "type": "double precision",
+          "comment": null,
+          "default": "0",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 12,
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": "now()",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 13,
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": "now()",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        }
+      ],
+      "indexes": [
+        {
+          "def": "CREATE INDEX idx_user_preferences_updated_at ON public.user_preferences USING btree (updated_at DESC)",
+          "name": "idx_user_preferences_updated_at"
+        },
+        {
+          "def": "CREATE INDEX idx_user_preferences_user_id ON public.user_preferences USING btree (user_id)",
+          "name": "idx_user_preferences_user_id"
+        },
+        {
+          "def": "CREATE UNIQUE INDEX user_preferences_pkey ON public.user_preferences USING btree (id)",
+          "name": "user_preferences_pkey"
+        },
+        {
+          "def": "CREATE UNIQUE INDEX user_preferences_user_id_key ON public.user_preferences USING btree (user_id)",
+          "name": "user_preferences_user_id_key"
+        }
+      ]
+    },
+    {
+      "table_schema": "public",
+      "table_name": "users",
+      "table_type": "table",
+      "table_comment": "User profiles extending Supabase Auth with social features",
+      "columns": [
+        {
+          "no": 1,
+          "name": "id",
+          "type": "uuid",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [
+            {
+              "on_delete": "CASCADE",
+              "on_update": "NO ACTION",
+              "ref_table": "users",
+              "constraint": "users_auth_id_fkey",
+              "ref_column": "id",
+              "ref_schema": "auth"
+            }
+          ],
+          "is_primary_key": true,
+          "identity_generation": null
+        },
+        {
+          "no": 2,
+          "name": "handle",
+          "type": "character varying(30)",
+          "comment": "Unique username for mentions and profile URLs",
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 3,
+          "name": "display_name",
+          "type": "character varying(100)",
+          "comment": null,
+          "default": null,
+          "nullable": false,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 4,
+          "name": "bio",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 5,
+          "name": "avatar_url",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 6,
+          "name": "cover_image_url",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 7,
+          "name": "followers_count",
+          "type": "integer",
+          "comment": null,
+          "default": "0",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 8,
+          "name": "following_count",
+          "type": "integer",
+          "comment": null,
+          "default": "0",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 9,
+          "name": "posts_count",
+          "type": "integer",
+          "comment": null,
+          "default": "0",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 10,
+          "name": "is_verified",
+          "type": "boolean",
+          "comment": null,
+          "default": "false",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 11,
+          "name": "is_suspended",
+          "type": "boolean",
+          "comment": null,
+          "default": "false",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 12,
+          "name": "email_notifications",
+          "type": "boolean",
+          "comment": null,
+          "default": "true",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 13,
+          "name": "push_notifications",
+          "type": "boolean",
+          "comment": null,
+          "default": "true",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 14,
+          "name": "privacy_settings",
+          "type": "jsonb",
+          "comment": "JSON object with privacy preferences",
+          "default": "'{\"show_activity\": true, \"allow_messages\": \"everyone\", \"profile_visibility\": \"public\"}'::jsonb",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 15,
+          "name": "metadata",
+          "type": "jsonb",
+          "comment": null,
+          "default": "'{}'::jsonb",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 16,
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": "now()",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 17,
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": "now()",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 19,
+          "name": "preferences",
+          "type": "jsonb",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 20,
+          "name": "social_links",
+          "type": "jsonb",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 21,
+          "name": "achievements",
+          "type": "jsonb",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 22,
+          "name": "voice_settings",
+          "type": "jsonb",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 23,
+          "name": "email",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 24,
+          "name": "website",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 25,
+          "name": "dob",
+          "type": "timestamp with time zone",
+          "comment": "Date of birth for age verification. Migrated from preferences.age_verified for existing users.",
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 26,
+          "name": "is_admin",
+          "type": "boolean",
+          "comment": null,
+          "default": null,
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 27,
+          "name": "has_completed_onboarding",
+          "type": "boolean",
+          "comment": "Indicates if user has completed the onboarding flow including contact sync",
+          "default": "false",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 28,
+          "name": "timezone",
+          "type": "text",
+          "comment": "User timezone for feature scheduling (e.g., Sunday recording disable)",
+          "default": "'UTC'::text",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 29,
+          "name": "onboarding_metadata",
+          "type": "jsonb",
+          "comment": "Tracks onboarding steps completion and preferences",
+          "default": "'{}'::jsonb",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        },
+        {
+          "no": 30,
+          "name": "recording_credits",
+          "type": "integer",
+          "comment": "Number of 2-minute recording credit blocks available for the user",
+          "default": "0",
+          "nullable": true,
+          "is_identity": false,
+          "foreign_keys": [],
+          "is_primary_key": false,
+          "identity_generation": null
+        }
+      ],
+      "indexes": [
+        {
+          "def": "CREATE INDEX idx_users_activity ON public.users USING btree (followers_count DESC NULLS LAST, posts_count DESC NULLS LAST) WHERE (posts_count > 0)",
+          "name": "idx_users_activity"
+        },
+        {
+          "def": "CREATE INDEX idx_users_created_at ON public.users USING btree (created_at DESC)",
+          "name": "idx_users_created_at"
+        },
+        {
+          "def": "CREATE INDEX idx_users_display_name ON public.users USING btree (display_name)",
+          "name": "idx_users_display_name"
+        },
+        {
+          "def": "CREATE INDEX idx_users_followers_active ON public.users USING btree (followers_count DESC, is_suspended)",
+          "name": "idx_users_followers_active"
+        },
+        {
+          "def": "CREATE INDEX idx_users_followers_count ON public.users USING btree (followers_count DESC)",
+          "name": "idx_users_followers_count"
+        },
+        {
+          "def": "CREATE INDEX idx_users_handle ON public.users USING btree (handle)",
+          "name": "idx_users_handle"
+        },
+        {
+          "def": "CREATE INDEX idx_users_onboarding ON public.users USING btree (has_completed_onboarding) WHERE (has_completed_onboarding = false)",
+          "name": "idx_users_onboarding"
+        },
+        {
+          "def": "CREATE UNIQUE INDEX users_email_key ON public.users USING btree (email)",
+          "name": "users_email_key"
+        },
+        {
+          "def": "CREATE UNIQUE INDEX users_handle_key ON public.users USING btree (handle)",
+          "name": "users_handle_key"
+        },
+        {
+          "def": "CREATE UNIQUE INDEX users_pkey ON public.users USING btree (id)",
+          "name": "users_pkey"
+        }
+      ]
+    }
+  ]
