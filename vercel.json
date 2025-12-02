@@ -32,6 +32,14 @@
   ],
   "rewrites": [
     {
+      "source": "/series",
+      "destination": "/series.html"
+    },
+    {
+      "source": "/series/(.*)",
+      "destination": "/series.html"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
