@@ -455,17 +455,25 @@ body.loaded { opacity: 1; }
 
 /* ── Mobile / Embed compact layout ── */
 @media (max-width: 768px) {
-  html { overflow: hidden; height: 100%; }
+  html {
+    overflow: hidden;
+    height: 100%;
+    background: transparent;
+  }
   body {
+    margin: 0;
     padding: 0;
     overflow: hidden;
     height: 100%;
+    background: transparent;
   }
 
   .series-player {
     width: 100%;
+    max-width: none;
     height: 100vh;
     max-height: 700px;
+    margin: 0;
     border-radius: 0;
     box-shadow: none;
     display: flex;
@@ -508,45 +516,55 @@ body.loaded { opacity: 1; }
   /* Hide store buttons on mobile — save vertical space */
   .store-buttons { display: none; }
 
-  /* Player bar: grid layout, no wrapping */
+  /* Player bar: clean grid layout */
   .player-bar {
-    margin: 0 20px;
-    padding: 12px 0;
+    margin: 0;
+    padding: 14px 20px;
+    border-top: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.18);
     display: grid;
     grid-template-columns: 1fr auto;
     grid-template-rows: auto auto;
-    gap: 6px 10px;
+    gap: 10px 14px;
     align-items: center;
     flex-shrink: 0;
-    flex-wrap: nowrap;
   }
   .player-meta {
     grid-column: 1; grid-row: 1;
     min-width: 0;
     flex: unset;
   }
+  .player-meta-label { font-size: 9px; letter-spacing: 1.5px; }
   .now-playing-title {
-    font-size: 14px;
+    font-size: 15px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  .now-playing-artist { font-size: 11px; }
+  .now-playing-artist { font-size: 12px; }
   .play-circle {
     grid-column: 2; grid-row: 1;
-    width: 44px; height: 44px;
+    width: 48px; height: 48px;
     margin-left: 0;
-    box-shadow: 0 6px 14px rgba(0,0,0,0.18);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
   }
-  .play-circle svg { width: 16px; height: 16px; }
+  .play-circle svg { width: 18px; height: 18px; }
   .player-controls {
     grid-column: 1 / -1; grid-row: 2;
     flex: unset;
     flex-wrap: nowrap;
-    gap: 6px;
+    gap: 8px;
   }
+  .ghost-btn { padding: 4px; }
+  .ghost-btn svg { width: 16px; height: 16px; }
   .progress-container { min-width: 0; }
-  .time-row { font-size: 10px; justify-content: space-between; }
+  .progress-track { height: 5px; }
+  .time-row {
+    font-size: 10px;
+    justify-content: space-between;
+    margin-top: 3px;
+  }
+  .dots-btn { padding: 4px 6px; }
 
   /* Chapter list: fill remaining space, scroll internally */
   .chapter-list {
@@ -576,7 +594,7 @@ body.loaded { opacity: 1; }
   .series-header { gap: 12px; padding: 12px 14px; }
   .series-cover { width: 80px; height: 80px; }
   .series-title { font-size: 16px; }
-  .player-bar { margin: 0 14px; }
+  .player-bar { padding: 12px 14px; }
   .chapter-list-header,
   .chapter-item { padding-left: 14px; padding-right: 14px; }
 }
