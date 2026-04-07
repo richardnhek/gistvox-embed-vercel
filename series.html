@@ -29,7 +29,10 @@ body {
   background: transparent;
   color: var(--accent);
   padding: 80px 60px;
+  opacity: 0;
+  transition: opacity 0.2s ease-in;
 }
+body.loaded { opacity: 1; }
 
 .series-player {
   width: 100%;
@@ -450,42 +453,132 @@ body {
   font-weight: 600;
 }
 
+/* ── Mobile / Embed compact layout ── */
 @media (max-width: 768px) {
-  body { padding: 16px; }
-  .series-header {
+  html { overflow: hidden; height: 100%; }
+  body {
+    padding: 0;
+    overflow: hidden;
+    height: 100%;
+  }
+
+  .series-player {
+    width: 100%;
+    height: 100vh;
+    max-height: 700px;
+    border-radius: 0;
+    box-shadow: none;
+    display: flex;
     flex-direction: column;
-    text-align: center;
+    overflow: hidden;
+  }
+
+  /* Header: always horizontal, compact */
+  .series-header {
+    gap: 16px;
+    padding: 16px 20px;
+    flex-shrink: 0;
   }
   .series-cover {
-    width: 200px;
-    height: 200px;
+    width: 110px;
+    height: 110px;
+    border-radius: 12px;
   }
-  .series-actions {
-    flex-direction: column;
+  .series-cover.no-image { font-size: 40px; }
+  .series-info { min-width: 0; gap: 2px; }
+  .series-label { font-size: 9px; letter-spacing: 2px; }
+  .series-title { font-size: clamp(18px, 3vw, 26px); }
+  .series-creator { font-size: 14px; }
+  .series-description {
+    font-size: 12px;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin: 2px 0 0;
   }
-  .open-btn { margin-left: 0; }
-  .store-buttons {
-    flex-direction: column;
-    align-items: center;
-  }
-  .store-btn {
-    width: 100%;
-    max-width: 200px;
-    justify-content: center;
-  }
+  .series-meta { font-size: 11px; }
+  .series-actions { margin-top: 8px; gap: 10px; }
+  .save-btn { padding: 6px 14px; font-size: 12px; }
+  .plus-icon { width: 16px; height: 16px; font-size: 12px; }
+  .open-btn { width: 32px; height: 32px; }
+  .open-btn img { width: 16px; height: 16px; }
+
+  /* Hide store buttons on mobile — save vertical space */
+  .store-buttons { display: none; }
+
+  /* Player bar: grid layout, no wrapping */
   .player-bar {
-    margin: 0 24px;
-    flex-direction: column;
-    align-items: stretch;
+    margin: 0 20px;
+    padding: 12px 0;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    gap: 6px 10px;
+    align-items: center;
+    flex-shrink: 0;
+    flex-wrap: nowrap;
   }
+  .player-meta {
+    grid-column: 1; grid-row: 1;
+    min-width: 0;
+    flex: unset;
+  }
+  .now-playing-title {
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .now-playing-artist { font-size: 11px; }
+  .play-circle {
+    grid-column: 2; grid-row: 1;
+    width: 44px; height: 44px;
+    margin-left: 0;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.18);
+  }
+  .play-circle svg { width: 16px; height: 16px; }
   .player-controls {
-    flex-wrap: wrap;
+    grid-column: 1 / -1; grid-row: 2;
+    flex: unset;
+    flex-wrap: nowrap;
+    gap: 6px;
   }
-  .chapter-list-header,
+  .progress-container { min-width: 0; }
+  .time-row { font-size: 10px; justify-content: space-between; }
+
+  /* Chapter list: fill remaining space, scroll internally */
+  .chapter-list {
+    flex: 1;
+    min-height: 0;
+    max-height: none;
+    padding: 6px 0 10px;
+  }
+  .chapter-list-header {
+    grid-template-columns: 32px 1fr 56px;
+    padding: 0 20px 6px;
+    font-size: 9px;
+  }
   .chapter-item {
-    grid-template-columns: 40px 1fr 70px;
-    padding: 14px 24px;
+    grid-template-columns: 32px 1fr 56px;
+    padding: 10px 20px;
+    gap: 6px;
   }
+  .chapter-number { font-size: 13px; }
+  .chapter-title { font-size: 14px; }
+  .chapter-subtitle { font-size: 11px; }
+  .chapter-duration { font-size: 11px; }
+}
+
+/* Extra small screens */
+@media (max-width: 420px) {
+  .series-header { gap: 12px; padding: 12px 14px; }
+  .series-cover { width: 80px; height: 80px; }
+  .series-title { font-size: 16px; }
+  .player-bar { margin: 0 14px; }
+  .chapter-list-header,
+  .chapter-item { padding-left: 14px; padding-right: 14px; }
 }
 </style>
 </head>
@@ -516,9 +609,13 @@ let currentChapters = [];
 let currentChapterIndex = -1;
 let isDragging = false;
 
+// Fade-in on load
+window.addEventListener('load', () => document.body.classList.add('loaded'));
+
 // Validation
 if (!seriesId || seriesId.length !== 36) {
-  document.getElementById('app').innerHTML = '<div class="error">Invalid or missing series ID</div>';
+  document.getElementById('app').innerHTML = '<div class="error">This content is no longer available</div>';
+  document.body.classList.add('loaded');
   throw new Error('Invalid series ID');
 }
 
@@ -564,7 +661,8 @@ async function loadSeries() {
     if (!seriesRes.ok) throw new Error('Failed to fetch series');
     const series = await seriesRes.json();
     if (!series || series.length === 0) {
-      app.innerHTML = '<div class="error">Series not found</div>';
+      app.innerHTML = '<div class="error">This content is no longer available</div>';
+      document.body.classList.add('loaded');
       return;
     }
     currentSeriesData = series[0];
@@ -704,14 +802,16 @@ async function loadSeries() {
 
     setupEventListeners();
     refreshSeriesStats();
-    
+    document.body.classList.add('loaded');
+
     if (autoplay && currentChapters.length > 0) {
       playChapter(0);
     }
 
   } catch (error) {
     console.error('Series player error:', error);
-    app.innerHTML = '<div class="error">Failed to load series</div>';
+    app.innerHTML = '<div class="error">This content is no longer available</div>';
+    document.body.classList.add('loaded');
   }
 }
 
@@ -930,7 +1030,12 @@ function handleShare() {
   };
 
   write().then((ok) => {
-    showToast(ok ? 'Link copied to clipboard' : 'Copy failed');
+    if (ok) {
+      showToast('Link copied to clipboard');
+    } else {
+      window.open(shareUrl, '_blank');
+      showToast('Opening link...');
+    }
   });
 }
 
