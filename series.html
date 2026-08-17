@@ -688,7 +688,11 @@ async function loadSeries() {
     let creator = { handle: 'anonymous', display_name: 'Anonymous' };
     if (currentSeriesData.user_id) {
       const userRes = await fetch(
-        `${SUPABASE_URL}/rest/v1/users?id=eq.${currentSeriesData.user_id}&select=*`,
+        // Explicit column list, NOT `select=*` — see the note in index.html.
+        // Public anon key on a third-party page; `*` published every column
+        // and breaks 42501 once v89 lands. This player renders only
+        // handle/display_name (avatar_url kept for parity with index.html).
+        `${SUPABASE_URL}/rest/v1/users?id=eq.${currentSeriesData.user_id}&select=id,handle,display_name,avatar_url`,
         { headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` } }
       );
       const users = await userRes.json();

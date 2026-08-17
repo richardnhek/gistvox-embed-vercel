@@ -613,7 +613,13 @@ async function loadPlayer() {
     let user = { handle: 'anonymous', display_name: 'Anonymous' };
     if (post.user_id) {
       const userRes = await fetch(
-        `${SUPABASE_URL}/rest/v1/users?id=eq.${post.user_id}&select=*`,
+        // Explicit column list, NOT `select=*`. This runs on the public anon
+        // key from a third-party page, so `*` published every column of the
+        // row — email, dob, is_admin, stripe ids, recording_credits. The v89
+        // migration revokes anon's access to those, which makes `select=*`
+        // fail 42501 outright (Postgres needs SELECT on every column to expand
+        // `*`). These four are the only fields this player renders.
+        `${SUPABASE_URL}/rest/v1/users?id=eq.${post.user_id}&select=id,handle,display_name,avatar_url`,
         { headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` } }
       );
       const users = await userRes.json();
