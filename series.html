@@ -700,8 +700,13 @@ async function loadSeries() {
     }
 
     // Fetch chapters (posts in this series)
+    // Explicit columns, NOT `select=*`: since v157 (2026-08-27) the anon role
+    // may not read posts.location/latitude/longitude/specific_audience_ids/
+    // moderation_notes/idempotency_key, so `*` answers 401 (42501) and this
+    // player showed "This content is no longer available" for every post.
+    // Only list columns this page renders.
     const chaptersRes = await fetch(
-      `${SUPABASE_URL}/rest/v1/posts?series_id=eq.${seriesId}&select=*&order=chapter_number.asc`,
+      `${SUPABASE_URL}/rest/v1/posts?series_id=eq.${seriesId}&select=id,title,chapter_title,chapter_number,audio_url,audio_duration,listens_count&order=chapter_number.asc`,
       { headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` } }
     );
     if (!chaptersRes.ok) throw new Error('Failed to fetch chapters');

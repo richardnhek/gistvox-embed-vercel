@@ -598,8 +598,13 @@ async function loadPlayer() {
   const container = document.getElementById('player');
   try {
     // Fetch post
+    // Explicit columns, NOT `select=*`: since v157 (2026-08-27) the anon role
+    // may not read posts.location/latitude/longitude/specific_audience_ids/
+    // moderation_notes/idempotency_key, so `*` answers 401 (42501) and this
+    // player showed "This content is no longer available" for every post.
+    // Only list columns this page renders.
     const postRes = await fetch(
-      `${SUPABASE_URL}/rest/v1/posts?id=eq.${postId}&select=*`,
+      `${SUPABASE_URL}/rest/v1/posts?id=eq.${postId}&select=id,user_id,title,description,audio_url,audio_duration,audience_type,listens_count,likes_count,saves_count,shares_count,created_at`,
       { headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` } }
     );
     if (!postRes.ok) throw new Error('Failed to fetch post');
